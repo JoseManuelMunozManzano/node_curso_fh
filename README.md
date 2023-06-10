@@ -29,3 +29,18 @@ En este punto vamos a ver un reforzamiento de ES6 y ES7.
 - Callbacks y callbacks en cadena
 - Promesas y promesas en cadena
 - Async y Await
+
+### 03-bases-node
+
+En este punto se van a ver las puras bases de Node.
+
+- Requerir información de otros archivos
+- Requerir paquetes
+- Importar archivos personalizados
+- NPM
+  - Install
+  - Uninstall
+- Package.json
+- Yargs
+- Recibir parámetros por línea de comando
+- Colores para la consola
