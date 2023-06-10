@@ -3,31 +3,7 @@ const callback_error = () =>
     // Vamos a ver un problema de los callbacks cuando se puede devolver un parámetro o un error.
     console.log('\nCALLBACK ERROR/CORRECTO');
 
-    const empleados = [
-      {
-        id: 1,
-        nombre: 'José Manuel',
-      },
-      {
-        id: 2,
-        nombre: 'Adriana',
-      },
-      {
-        id: 3,
-        nombre: 'Maricarmen',
-      },
-    ];
-
-    const salarios = [
-      {
-        id: 1,
-        salario: 1000,
-      },
-      {
-        id: 2,
-        salario: 1500,
-      },
-    ];
+    const { empleados } = require('./data/empleados');
 
     //? Sin callback, pero el console.log no lo quiero hacer así
     const getEmpleado = (id) => {
