@@ -87,6 +87,8 @@ const callback_error = () =>
       console.log('Empleado existe');
       console.log(empleado);
     });
+
+    resolve();
   });
 
 module.exports = { callback_error };
