@@ -17,7 +17,7 @@
 
     setTimeout(() => {
       // PROBLEMA: Todo el código lo tengo aquí, ¿pero qué pasa si necesito que ciertas partes
-      //   se hagan fuera de getUsuarioBy?
+      //   se hagan fuera de getUsuarioByID?
       // Ver la solución abajo.
       console.log(usuario);
     }, 1000);
