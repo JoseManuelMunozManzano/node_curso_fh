@@ -40,11 +40,15 @@ const promesas_cadena = () => {
         return getSalario(id);
       })
       // Este then se dispara con el producto de la promesa devuelta por getSalario(id)
-      .then((salario) => console.log('El empleado:', nombre, 'tiene un salario de:', salario))
+      .then((salario) => {
+        resolve(); // esto sobra en la "vida real". Es el resolve del primer Promise, para index.js
+        console.log('El empleado:', nombre, 'tiene un salario de:', salario);
+      })
       // Con las promesas en cadena, los catch se pueden gestionar individualmente o uno general.
-      .catch((err) => console.log(err));
-
-    resolve();
+      .catch((err) => {
+        resolve(); // esto sobra en la "vida real". Es el resolve del primer Promise, para index.js
+        console.log(err);
+      });
   });
 };
 
