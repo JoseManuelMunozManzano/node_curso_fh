@@ -1,0 +1,14 @@
+{
+  "name": "02-fundamentos_js",
+  "version": "1.0.0",
+  "description": "En este punto vamos a ver un reforzamiento de ES6 y ES7.",
+  "main": "index.js",
+  "scripts": {
+    "start_01": "nodemon const-var-let"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
