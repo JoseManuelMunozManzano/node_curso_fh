@@ -35,7 +35,7 @@ En este punto vamos a ver un reforzamiento de ES6 y ES7.
 En este punto se van a ver las puras bases de Node.
 
 - Requerir información de otros archivos
-- Requerir paquetes
+- Requerir paquetes --> en package.json se indica "type":"module" para hacer importaciones tipo JS
 - Importar archivos personalizados
 - NPM
   - Install
