@@ -25,5 +25,5 @@ npm i
 Para ejecutar:
 
 ```
-npm run start_01
+npm start
 ```

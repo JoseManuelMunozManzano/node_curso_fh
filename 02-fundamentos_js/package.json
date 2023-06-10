@@ -4,7 +4,7 @@
   "description": "En este punto vamos a ver un reforzamiento de ES6 y ES7.",
   "main": "index.js",
   "scripts": {
-    "start_01": "nodemon const-var-let"
+    "start": "nodemon"
   },
   "author": "",
   "license": "ISC",

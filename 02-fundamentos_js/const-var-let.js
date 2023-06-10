@@ -1,5 +1,7 @@
 // Simple resumen de const vs let vs var
 
+console.log('VAR vs LET vs CONST');
+
 // ----------------------------- var -----------------------------
 // De las versiones antiguas de JS. No se recomienda su uso porque da lugar a errores y usos extraños.
 // Se crea la variable en un ámbito global.
