@@ -1,16 +1,19 @@
 {
   "name": "03-bases-node",
   "version": "1.0.0",
-  "description": "",
+  "description": "Tabla de multiplicar con archivo de texto",
   "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "JMMM",
+  "license": "MIT",
   "devDependencies": {
     "nodemon": "^2.0.22"
+  },
+  "dependencies": {
+    "colors": "^1.4.0"
   }
 }
