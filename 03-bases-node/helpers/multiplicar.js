@@ -5,7 +5,7 @@
 import fs from 'fs';
 import colors from 'colors';
 
-import { raw } from './raw.js';
+import './raw.js';
 
 export const crearArchivo = async (base = 5, listar = false) => {
   try {
