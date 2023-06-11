@@ -25,8 +25,8 @@ Para instalar laa dependencias:
 npm i
 ```
 
-Para ejecutar:
+Para ejecutar (base puede ser cualquier número):
 
 ```
-npm start
+npm start -- --base=5
 ```
