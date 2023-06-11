@@ -23,7 +23,7 @@ export const crearArchivo = async (base = 5, hasta = 10, listar = false) => {
       console.log(salida);
     }
 
-    fs.writeFileSync(`${file}`, salida.raw);
+    fs.writeFileSync(`./salida/${file}`, salida.raw);
 
     return file;
   } catch (err) {
