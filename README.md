@@ -44,3 +44,16 @@ En este punto se van a ver las puras bases de Node.
 - Yargs
 - Recibir parámetros por línea de comando
 - Colores para la consola
+
+### 04-lista-tareas
+
+Es una aplicación de consola de tareas por hacer muy completa.
+
+- stdin
+- stdout
+- Ciclos
+- Inquirer
+- Clases en JavaScript
+- Archivos JSON
+- Fuertemente async y await
+- Transformaciones
