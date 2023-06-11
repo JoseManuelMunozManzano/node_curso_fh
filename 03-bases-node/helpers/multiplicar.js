@@ -4,11 +4,7 @@
 //   "type": "module"
 import fs from 'fs';
 
-export const crearArchivo = async (base = 5) => {
-  console.log('=================');
-  console.log('   TABLA DEL', base);
-  console.log('=================');
-
+export const crearArchivo = async (base = 5, listar = false) => {
   try {
     const file = `tabla-${base}.txt`;
     let salida = '';
@@ -17,7 +13,12 @@ export const crearArchivo = async (base = 5) => {
       salida += `${base} x ${i} = ${base * i}\n`;
     }
 
-    console.log(salida);
+    if (listar) {
+      console.log('=================');
+      console.log('   TABLA DEL', base);
+      console.log('=================');
+      console.log(salida);
+    }
 
     fs.writeFileSync(`${file}`, salida);
 
