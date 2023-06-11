@@ -26,10 +26,8 @@ for (let i = 1; i < 11; i++) {
 
 console.log(salida);
 
-// Uso de fs.writeFile
-// https://nodejs.org/dist/latest-v18.x/docs/api/fs.html#fswritefilefile-data-options-callback
-fs.writeFile(`${file}`, salida, (err) => {
-  if (err) throw err;
+// Uso de fs.writeFileSync
+// https://nodejs.org/dist/latest-v18.x/docs/api/fs.html#fswritefilesyncfile-data-options
+fs.writeFileSync(`${file}`, salida);
 
-  console.log(`${file} creado`);
-});
+console.log(`${file} creado`);
