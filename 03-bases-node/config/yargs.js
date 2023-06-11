@@ -49,10 +49,21 @@ export const argv = yargs(hideBin(process.argv))
     default: false,
     describe: 'Muestra el resultado en consola',
   })
+  .option('h', {
+    alias: 'hasta',
+    type: 'number',
+    default: 10,
+    describe: 'Cantidad de multiplicaciones a realizar',
+  })
   .check((argv, options) => {
     if (isNaN(argv.b)) {
       throw 'La base tiene que ser un número';
     }
+
+    if (isNaN(argv.h)) {
+      throw 'La cantidad tiene que ser un número';
+    }
+
     return true;
   }).argv;
 

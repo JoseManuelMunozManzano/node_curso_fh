@@ -25,8 +25,18 @@ Para instalar laa dependencias:
 npm i
 ```
 
-Para ejecutar (base puede ser cualquier número):
+Para ver la ayuda y saber como ejecutar:
 
 ```
-npm start -- --base=5
+npm run node -- --help
+```
+
+Para ejecutar (base puede ser cualquier número, listar puede o no estar y hasta es la cantidad de multiplicaciones):
+
+```
+npm start -- --base=5 --listar --hasta=12
+
+o
+
+npm run node -- --base=7 -l --hasta=15
 ```

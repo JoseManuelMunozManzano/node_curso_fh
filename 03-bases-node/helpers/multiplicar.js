@@ -7,12 +7,12 @@ import colors from 'colors';
 
 import './raw.js';
 
-export const crearArchivo = async (base = 5, listar = false) => {
+export const crearArchivo = async (base = 5, hasta = 10, listar = false) => {
   try {
     const file = `tabla-${base}.txt`;
     let salida = '';
 
-    for (let i = 1; i < 11; i++) {
+    for (let i = 1; i <= hasta; i++) {
       salida += `${base} ${'x'.green} ${i} ${'='.green} ${base * i}\n`;
     }
 
