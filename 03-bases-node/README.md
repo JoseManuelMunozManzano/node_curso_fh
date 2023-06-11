@@ -19,7 +19,7 @@ Para crear el proyecto:
 npm init -y
 ```
 
-Para instalar laa dependencias:
+Para instalar las dependencias:
 
 ```
 npm i
