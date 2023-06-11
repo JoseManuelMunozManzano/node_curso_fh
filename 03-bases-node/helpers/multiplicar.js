@@ -5,6 +5,8 @@
 import fs from 'fs';
 import colors from 'colors';
 
+import { raw } from './raw.js';
+
 export const crearArchivo = async (base = 5, listar = false) => {
   try {
     const file = `tabla-${base}.txt`;
@@ -21,7 +23,7 @@ export const crearArchivo = async (base = 5, listar = false) => {
       console.log(salida);
     }
 
-    fs.writeFileSync(`${file}`, salida);
+    fs.writeFileSync(`${file}`, salida.raw);
 
     return file;
   } catch (err) {
