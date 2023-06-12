@@ -28,3 +28,5 @@ Para ejecutar:
 ```
 npm start
 ```
+
+NOTA: Es interesante ir viendo los commits porque primero se hace el menú más manual y luego se usa inquirer.
