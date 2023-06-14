@@ -21,7 +21,7 @@ export const leerDB = () => {
   // arreglo de objetos.
   const data = JSON.parse(info);
 
-  console.log(data);
+  // console.log(data);
 
   // Devuelvo arreglo de tareas.
   return data;
