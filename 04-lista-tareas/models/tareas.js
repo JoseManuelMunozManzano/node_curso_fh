@@ -23,6 +23,12 @@ export default class Tareas {
     this._listado = {};
   }
 
+  borrarTarea(id = '') {
+    if (this._listado[id]) {
+      delete this._listado[i];
+    }
+  }
+
   // Se inicializa más que nada para recibir la ayuda de VSCode sobre que métodos se pueden usar.
   cargarTareasFromArray(tareas = []) {
     tareas.forEach((tarea) => {
