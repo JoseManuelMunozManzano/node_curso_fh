@@ -100,10 +100,31 @@ export const listadoTareasBorrar = async (tareas = []) => {
       name: 'id',
       message: 'Borrar',
       choices,
+      // loop: false,
     },
   ];
+
+  // Para añadir al principio de un arreglo
+  choices.unshift({
+    value: '0',
+    name: '0.'.green + ' Cancelar',
+  });
 
   const { id } = await inquirer.prompt(preguntas);
 
   return id;
+};
+
+export const confirmar = async (message = '') => {
+  const pregunta = [
+    {
+      type: 'confirm',
+      name: 'ok',
+      message,
+    },
+  ];
+
+  const { ok } = await inquirer.prompt(pregunta);
+
+  return ok;
 };
