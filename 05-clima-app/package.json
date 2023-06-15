@@ -1,0 +1,12 @@
+{
+  "name": "05-clima-app",
+  "version": "1.0.0",
+  "description": "Es una aplicación de consola donde se puede buscar una ciudad y ver su clima. Se usa la API de OpenWeatherMaps.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
