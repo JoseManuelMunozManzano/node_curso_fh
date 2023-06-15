@@ -73,4 +73,23 @@ export default class Tareas {
         console.log(`${idx} ${desc} :: ${estado} `);
       });
   }
+
+  toggleCompletadas(ids = []) {
+    ids.forEach((id) => {
+      // tarea tiene asignada la referencia de _listado[id] por lo que la modificación
+      // afecta a _listado[id]
+      const tarea = this._listado[id];
+      if (!tarea.completadoEn) {
+        tarea.completadoEn = new Date().toISOString();
+      }
+    });
+
+    // Quitar los completados
+    this.listadoArr.forEach((tarea) => {
+      if (!ids.includes(tarea.id)) {
+        // Haciendo referencia a la propiedad del objeto
+        this._listado[tarea.id].completadoEn = null;
+      }
+    });
+  }
 }
