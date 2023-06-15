@@ -100,6 +100,9 @@ export const listadoTareasBorrar = async (tareas = []) => {
       name: 'id',
       message: 'Borrar',
       choices,
+      // Número de elementos que se ven. Con esto consigo evitar el error de loop al moverme con el cursor
+      // sobre las opciones.
+      pageSize: 10,
       // loop: false,
     },
   ];
