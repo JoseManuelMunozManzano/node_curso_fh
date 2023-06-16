@@ -28,3 +28,7 @@ Para ejecutar:
 ```
 npm start
 ```
+
+NOTAS:
+
+- Endpoint de pruebas: https://reqres.in/

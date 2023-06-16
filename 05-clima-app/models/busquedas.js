@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export default class Busquedas {
   historial = ['Tegucigalpa', 'Madrid', 'San José', 'Bogotá'];
 
@@ -6,10 +8,16 @@ export default class Busquedas {
   }
 
   async ciudad(lugar = '') {
-    // petición http
-    console.log(lugar);
+    // Las peticiones http siempre es bueno ponerlas en un try catch
+    try {
+      // petición http
+      const resp = await axios.get('https://reqres.in/api/users?page=2');
+      console.log(resp.data);
 
-    // retornar los lugares
-    return [];
+      // retornar los lugares
+      return [];
+    } catch (error) {
+      return [];
+    }
   }
 }
