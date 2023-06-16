@@ -1,7 +1,10 @@
+import fs from 'fs';
 import axios from 'axios';
 
 export default class Busquedas {
-  historial = ['Tegucigalpa', 'Madrid', 'San José', 'Bogotá'];
+  historial = [];
+  // Es muy fácil trabajar con JSON en JavaScript porque se puede serializar y deserializar muy fácilmente.
+  dbPath = './db/database.json';
 
   constructor() {
     // TODO: leer DB si existe
@@ -67,4 +70,26 @@ export default class Busquedas {
       console.log(error);
     }
   }
+
+  agregarHistorial(lugar = '') {
+    if (this.historial.includes(lugar.toLowerCase())) {
+      return;
+    }
+
+    this.historial.unshift(lugar.toLowerCase());
+
+    // Grabar en DB
+    this.guardarDB();
+  }
+
+  guardarDB() {
+    // Lo indicamos así porque podríamos tener más propiedades que grabar. Esto da mucha flexibilidad.
+    const payload = {
+      historial: this.historial,
+    };
+
+    fs.writeFileSync(this.dbPath, JSON.stringify(payload));
+  }
+
+  leerDB() {}
 }
