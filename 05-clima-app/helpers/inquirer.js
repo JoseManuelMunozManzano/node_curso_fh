@@ -68,34 +68,33 @@ export const leerInput = async (message) => {
   return desc;
 };
 
-export const listadoTareasBorrar = async (tareas = []) => {
-  const choices = tareas.map((tarea, i) => {
+export const listarLugares = async (lugares = []) => {
+  const choices = lugares.map((lugar, i) => {
     const idx = `${i + 1}.`.green;
 
     return {
-      value: tarea.id,
-      name: `${idx} ${tarea.desc}`,
+      value: lugar.id,
+      name: `${idx} ${lugar.nombre}`,
     };
   });
-
-  const preguntas = [
-    {
-      type: 'list',
-      name: 'id',
-      message: 'Borrar',
-      choices,
-      // Número de elementos que se ven. Con esto consigo evitar el error de loop al moverme con el cursor
-      // sobre las opciones.
-      pageSize: 10,
-      // loop: false,
-    },
-  ];
 
   // Para añadir al principio de un arreglo
   choices.unshift({
     value: '0',
     name: '0.'.green + ' Cancelar',
   });
+
+  const preguntas = [
+    {
+      type: 'list',
+      name: 'id',
+      message: 'Seleccione lugar:',
+      choices,
+      // Número de elementos que se ven. Con esto consigo evitar el error de loop al moverme con el cursor
+      // sobre las opciones.
+      pageSize: 10,
+    },
+  ];
 
   const { id } = await inquirer.prompt(preguntas);
 
