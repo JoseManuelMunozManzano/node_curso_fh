@@ -1,6 +1,6 @@
 # 05-clima-app
 
-Es una aplicación de consola donde se puede buscar una ciudad y ver su clima. Se usa la API de Mapbox.
+Es una aplicación de consola donde se puede buscar una ciudad y ver su clima. Se usa la API de Mapbox y OpenWeather.
 
 - Consumo de APIs
 - Llamadas HTTP hacia servidores externos
