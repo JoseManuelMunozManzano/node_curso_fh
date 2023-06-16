@@ -1,6 +1,6 @@
 # 05-clima-app
 
-Es una aplicación de consola donde se puede buscar una ciudad y ver su clima. Se usa la API de OpenWeatherMaps.
+Es una aplicación de consola donde se puede buscar una ciudad y ver su clima. Se usa la API de Mapbox.
 
 - Consumo de APIs
 - Llamadas HTTP hacia servidores externos
@@ -11,19 +11,23 @@ Es una aplicación de consola donde se puede buscar una ciudad y ver su clima. S
 - Aplicación de consola con historial
 - Variables de entorno
 
-Para crear el proyecto:
+1. Para crear el proyecto:
 
 ```
 npm init -y
 ```
 
-Para instalar las dependencias:
+2. Para instalar las dependencias:
 
 ```
 npm i
 ```
 
-Para ejecutar:
+3. Renombrar el fichero example.env a .env
+
+Crear un token en: https://www.mapbox.com/ e indicarlo en el archivo .env
+
+4. Para ejecutar:
 
 ```
 npm start

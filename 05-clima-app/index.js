@@ -1,3 +1,8 @@
+// Node ya incluye por defecto las variables de entorno creadas en .env
+// Para ver las variables de entorno:
+// console.log(process.env);
+import 'dotenv/config';
+
 import { inquirerMenu, leerInput, pausa } from './helpers/inquirer.js';
 import Busquedas from './models/busquedas.js';
 
