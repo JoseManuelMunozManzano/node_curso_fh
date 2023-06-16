@@ -19,7 +19,7 @@ const main = async () => {
         const terminoBusqueda = await leerInput('Ciudad: ');
 
         // Buscar los lugares
-        const lugares = await busquedas.ciudad(terminoBusqueda);
+        const lugares = await busquedas.buscarCiudades(terminoBusqueda);
 
         // Seleccionar el lugar
         const idSeleccionado = await listarLugares(lugares);

@@ -15,7 +15,7 @@ export default class Busquedas {
     };
   }
 
-  async ciudad(lugar = '') {
+  async buscarCiudades(lugar = '') {
     // Las peticiones http siempre es bueno ponerlas en un try catch
     try {
       // Petición http
