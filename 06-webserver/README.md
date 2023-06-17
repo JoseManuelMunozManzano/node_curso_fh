@@ -30,3 +30,9 @@ npm i
 ```
 npm start
 ```
+
+4. Ir a la ruta
+
+```
+http:/localhost:8080
+```
