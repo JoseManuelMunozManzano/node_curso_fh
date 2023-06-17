@@ -70,3 +70,18 @@ Es una aplicación de consola donde se puede buscar una ciudad y ver su clima. S
 - Uso de OpenWeather para obtener el clima
 - Aplicación de consola con historial
 - Variables de entorno
+
+### 06-webserver
+
+Webserver destinado a mostrar sitios webs estáticos/dinámicos y donde se desplegarán aplicaciones de producción de Angular y React.
+
+- Uso y configuración de Express
+- Servir contenido estático
+- Servir contenido dinámico
+- Template engines
+- Handlebars
+  - Parciales
+  - Variables
+- Despliegues en Heroku
+- Hacer carpetas públicas en la web
+- Desplegar aplicaciones de Angular y React
