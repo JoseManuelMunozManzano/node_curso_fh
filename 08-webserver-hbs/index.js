@@ -6,9 +6,11 @@
 // La idea de Handlebars es tener separado las vistas, el modelo y el controlador, patrón MVC.
 // La ventaja que aporta Handlebars es que partes que se utilizan mucho, como el head, el footer, el nav,
 // podemos aislarlas en sus propios ficheros y reutilizarlas.
+// Esto se llama partials.
 // Y luego, al ser dinámico, podemos trabajar con variables, bloques if, do...
 import express from 'express';
 import * as url from 'url';
+import hbs from 'hbs';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 const app = express();
@@ -18,6 +20,9 @@ const port = 8080;
 // Para usar la configuración por defecto, tenemos que crear una carpeta llamadas views en la raiz.
 // Ahí es donde buscará las vistas Handlebars.
 app.set('view engine', 'hbs');
+
+// Tenemos que registrar el directorio donde estan los partials.
+hbs.registerPartials(__dirname + '/views/partials');
 
 app.use(express.static(__dirname + '/public'));
 
@@ -34,11 +39,17 @@ app.get('/', (req, res) => {
 });
 
 app.get('/generic', (req, res) => {
-  res.sendFile(__dirname + '/public/generic.html');
+  res.render('generic', {
+    nombre: 'José Manuel',
+    titulo: 'Práctica de Node',
+  });
 });
 
 app.get('/elements', (req, res) => {
-  res.sendFile(__dirname + '/public/elements.html');
+  res.render('elements', {
+    nombre: 'José Manuel',
+    titulo: 'Práctica de Node',
+  });
 });
 
 app.listen(port, () => {
