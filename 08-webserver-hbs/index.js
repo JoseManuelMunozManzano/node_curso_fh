@@ -24,7 +24,13 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', (req, res) => {
   // Para renderizar vistas se usa el método render.
   // En este caso se está renderizando la vista situada en /views/home.hbs
-  res.render('home');
+  //
+  // Mandar argumentos desde el controlador para renderizar la vista.
+  // Ver como se atrapan estos argumentos en /views/home.hbs
+  res.render('home', {
+    nombre: 'José Manuel',
+    titulo: 'Práctica de Node',
+  });
 });
 
 app.get('/generic', (req, res) => {

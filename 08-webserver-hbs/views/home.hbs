@@ -5,7 +5,8 @@
 -->
 <html>
   <head>
-    <title>Road Trip by TEMPLATED</title>
+    {{! Accediendo con doble llave a los argumentos enviados en el controlador }}
+    <title>{{titulo}}</title>
     <meta charset='utf-8' />
     <meta name='viewport' content='width=device-width, initial-scale=1' />
     <link rel='stylesheet' href='assets/css/main.css' />
@@ -14,7 +15,7 @@
     <!-- Header -->
     <header id='header'>
       <div class='logo'>
-        <a href='index.html'>Road Trip <span>by TEMPLATED</span></a>
+        <a href='/'>{{titulo}} <span>{{nombre}}</span></a>
       </div>
       <a href='#menu'><span>Menu</span></a>
     </header>
