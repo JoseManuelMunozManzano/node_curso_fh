@@ -85,3 +85,8 @@ Webserver destinado a mostrar sitios webs estáticos/dinámicos y donde se despl
 - Despliegues en Heroku
 - Hacer carpetas públicas en la web
 - Desplegar aplicaciones de Angular y React
+
+### 07-webserver2
+
+Es un ejercicio de la parte 06-webserver que, para aislarlo y no mezclarlo con las notas de Express, se crea aparte.
+Consiste en servir un template en el servidor de Express.
