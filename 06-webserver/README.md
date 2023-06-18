@@ -36,3 +36,5 @@ npm start
 ```
 http:/localhost:8080
 ```
+
+NOTA: Queda el fuente index_http.js como ejemplo de utilización del paquete http.
