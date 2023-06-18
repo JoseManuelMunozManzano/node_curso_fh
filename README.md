@@ -90,3 +90,9 @@ Webserver destinado a mostrar sitios webs estáticos/dinámicos y donde se despl
 
 Es un ejercicio de la parte 06-webserver que, para aislarlo y no mezclarlo con las notas de Express, se crea aparte.
 Consiste en servir un template en el servidor de Express.
+
+### 08-webserver-hbs
+
+Es un ejercicio de la parte 06-webserver que, para aislarlo y no mezclarlo con las notas de Express, se crea aparte.
+
+Consiste en usar el template engine Handlebars para pre-renderizar las vistas en el backend y que Express las mande como respuesta a los respectivos endpoints.
