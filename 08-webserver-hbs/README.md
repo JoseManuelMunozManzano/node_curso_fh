@@ -19,7 +19,7 @@ npm i
 3. Para ejecutar:
 
 ```
-npm start
+npm run start:dev
 ```
 
 4. Ir a la ruta

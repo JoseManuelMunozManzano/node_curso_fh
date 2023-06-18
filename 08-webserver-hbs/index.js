@@ -8,13 +8,23 @@
 // podemos aislarlas en sus propios ficheros y reutilizarlas.
 // Esto se llama partials.
 // Y luego, al ser dinámico, podemos trabajar con variables, bloques if, do...
-import express from 'express';
+import 'dotenv/config';
 import * as url from 'url';
+import express from 'express';
 import hbs from 'hbs';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 const app = express();
-const port = 8080;
+
+// Las dos cosas necesarias para poder desplegar las aplicaciones en un hosting son:
+//
+// 1. El puerto debe estar en una varible de entorno porque el hosting decidirá el puerto de despliegue.
+//    Para ello instalar dotenv:
+//    npm i dotenv y crear archivo .env en la raiz.
+//    En este caso se ha llamado PORT a esta variable de entorno
+// 2. En package.json crear el script start para que ejecute node index.js, o como se llame la app.
+//    No usar nodemon porque si cambia algo se reinicia la app.
+const port = process.env.PORT | 8080;
 
 // Diciendo a Express que voy a usar Handlebars
 // Para usar la configuración por defecto, tenemos que crear una carpeta llamadas views en la raiz.
