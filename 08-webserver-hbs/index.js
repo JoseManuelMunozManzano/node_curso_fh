@@ -24,7 +24,7 @@ const app = express();
 //    En este caso se ha llamado PORT a esta variable de entorno
 // 2. En package.json crear el script start para que ejecute node index.js, o como se llame la app.
 //    No usar nodemon porque si cambia algo se reinicia la app.
-const port = process.env.PORT | 8080;
+const port = process.env.PORT || 8080;
 
 // Diciendo a Express que voy a usar Handlebars
 // Para usar la configuración por defecto, tenemos que crear una carpeta llamadas views en la raiz.
