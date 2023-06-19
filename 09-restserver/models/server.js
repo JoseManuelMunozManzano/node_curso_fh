@@ -9,12 +9,23 @@ export class Server {
     // Una vez importado dotenv las variables de entorno son globales a toda la aplicación.
     this.port = process.env.PORT || 8080;
 
-    // Llamando a la configuración de rutas.
+    // Middlewares: Funciones que añaden nueva funcionalidad a mi webserver
+    this.middlewares();
+
+    // Rutas de mi aplicación.
     this.routes();
   }
 
+  middlewares() {
+    // Directorio público
+    // Ahora para la ruta / se sirve index.html incluido en el directorio public.
+    console.log(this.__dirname);
+    this.app.use(express.static('public'));
+  }
+
   routes() {
-    this.app.get('/', (req, res) => {
+    // Se cambia la ruta para que se vea algo, ya que la ruta / la coge de index.html del directorio public.
+    this.app.get('/api', (req, res) => {
       res.send('Hello World');
     });
   }

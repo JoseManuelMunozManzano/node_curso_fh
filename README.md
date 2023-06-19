@@ -99,7 +99,7 @@ Consiste en usar el template engine Handlebars para pre-renderizar las vistas en
 
 ### 09-restserver
 
-Es una práctica Rest en NodeJS.
+Es una práctica Rest en NodeJS usando Express basado en clases.
 
 Se van a cubrir los siguientes temas:
 
