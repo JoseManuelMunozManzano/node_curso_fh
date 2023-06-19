@@ -24,9 +24,36 @@ export class Server {
   }
 
   routes() {
-    // Se cambia la ruta para que se vea algo, ya que la ruta / la coge de index.html del directorio public.
     this.app.get('/api', (req, res) => {
-      res.send('Hello World');
+      // Devolviendo json en vez de text. Se suele mandar un objeto.
+      // Para mandar también un status de error sería: res.status(403).json({})
+      res.json({
+        msg: 'get API',
+      });
+    });
+
+    this.app.put('/api', (req, res) => {
+      res.json({
+        msg: 'put API',
+      });
+    });
+
+    this.app.post('/api', (req, res) => {
+      res.json({
+        msg: 'post API',
+      });
+    });
+
+    this.app.delete('/api', (req, res) => {
+      res.json({
+        msg: 'delete API',
+      });
+    });
+
+    this.app.patch('/api', (req, res) => {
+      res.json({
+        msg: 'patch API',
+      });
     });
   }
 
