@@ -96,3 +96,20 @@ Consiste en servir un template en el servidor de Express.
 Es un ejercicio de la parte 06-webserver que, para aislarlo y no mezclarlo con las notas de Express, se crea aparte.
 
 Consiste en usar el template engine Handlebars para pre-renderizar las vistas en el backend y que Express las mande como respuesta a los respectivos endpoints.
+
+### 09-restserver
+
+Es una práctica Rest en NodeJS.
+
+Se van a cubrir los siguientes temas:
+
+- Instalación y pruebas con MongoDB
+- Peticiones HTTP
+  - Get
+  - Put
+  - Post
+  - Delete
+- Aprender sobre códigos de error HTTP
+- Códigos de error en Express
+- Archivos para la configuración global
+- Tips importantes en Postman
