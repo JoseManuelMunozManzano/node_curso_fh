@@ -1,5 +1,14 @@
 // Express basado en clases, para organizarlo todo mejor.
 import express from 'express';
+// Para que solo ciertas páginas, o todo el mundo porque se va a proteger de cierta manera, puedan acceder a mi API
+// instalaremos un paquete llamado cors.
+// Básicamente cors (cross-origin access record) permite proteger nuestro servidor de una manera superficial.
+// No es muy útil configurar CORS si la API está en la red interna de la empresa, es decir, no se expone al exterior.
+// Se pueden crear listas blancas para dar acceso a nuestro endpoint desde esas urls.
+// Indicar que Postman se salta el CORS, por lo que para probar que CORS está configurado habría que hacer una petición
+// desde el front de React o Angular...
+// https://www.npmjs.com/package/cors
+import cors from 'cors';
 
 export class Server {
   constructor() {
@@ -17,9 +26,11 @@ export class Server {
   }
 
   middlewares() {
+    // CORS
+    this.app.use(cors());
+
     // Directorio público
     // Ahora para la ruta / se sirve index.html incluido en el directorio public.
-    console.log(this.__dirname);
     this.app.use(express.static('public'));
   }
 
@@ -39,7 +50,7 @@ export class Server {
     });
 
     this.app.post('/api', (req, res) => {
-      res.json({
+      res.status(201).json({
         msg: 'post API',
       });
     });
