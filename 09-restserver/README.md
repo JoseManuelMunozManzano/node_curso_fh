@@ -27,13 +27,15 @@ npm init -y
 npm i
 ```
 
-3. Para ejecutar:
+3. Renombrar el archivo example.env a .env
+
+4. Para ejecutar:
 
 ```
 npm run start:dev
 ```
 
-4. Ir a la ruta
+5. Ir a la ruta
 
 ```
 http:/localhost:8080
