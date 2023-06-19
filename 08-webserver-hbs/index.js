@@ -62,6 +62,7 @@ app.get('/elements', (req, res) => {
   });
 });
 
-app.listen(port, () => {
+// IMPORTANTE: Para poder desplegar en Railway hay que indicar el host '0.0.0.0
+app.listen(port, '0.0.0.0', () => {
   console.log(`Escuchando el puerto ${port}`);
 });
