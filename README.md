@@ -113,3 +113,9 @@ Se van a cubrir los siguientes temas:
 - Códigos de error en Express
 - Archivos para la configuración global
 - Tips importantes en Postman
+
+### 10-restserver_respaldo
+
+Rest configurado con Express con clases.
+
+Es un backed básico listo para ir metiéndole funcionalidad.
