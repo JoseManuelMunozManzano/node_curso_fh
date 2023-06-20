@@ -55,8 +55,10 @@ export class Server {
     this.app.use(this.usuariosPath, router);
   }
 
+  // Dejando listo el proyecto para desplegar en Railway.
+  // Se ha indicado en package.json el script start y aquí indicamos el host 0.0.0.0
   listen() {
-    this.app.listen(this.port, () => {
+    this.app.listen(this.port, '0.0.0.0', () => {
       console.log('Servidor corriendo en puerto', this.port);
     });
   }
