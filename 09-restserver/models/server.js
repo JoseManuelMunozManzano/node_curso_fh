@@ -10,6 +10,8 @@ import express from 'express';
 // https://www.npmjs.com/package/cors
 import cors from 'cors';
 
+import { router } from '../routes/usuarios.js';
+
 export class Server {
   constructor() {
     // Al crear una instancia de Server, vamos a crear la aplicación de express aquí como una propiedad
@@ -17,6 +19,9 @@ export class Server {
     this.app = express();
     // Una vez importado dotenv las variables de entorno son globales a toda la aplicación.
     this.port = process.env.PORT || 8080;
+    // Es un poco difícil ver las rutas de la aplicación, por lo que se incluye aquí, para que otros
+    // desarrolladores que vengan a ver mi servidor puedan ver las rutas disponibles.
+    this.usuariosPath = '/api/usuarios';
 
     // Middlewares: Funciones que añaden nueva funcionalidad a mi webserver
     this.middlewares();
@@ -34,38 +39,13 @@ export class Server {
     this.app.use(express.static('public'));
   }
 
+  // Se va a separar las rutas del controlador.
+  // Esto es porque puede que haya rutas que necesiten autenticación y se le podría aplicar un middleware a todas las rutas.
+  // Y también para tener un archivo especial de rutas y otro de controladores de esas rutas por facilidad de mantenimiento.
+  // Se crea el directorio routes para las rutas.
   routes() {
-    this.app.get('/api', (req, res) => {
-      // Devolviendo json en vez de text. Se suele mandar un objeto.
-      // Para mandar también un status de error sería: res.status(403).json({})
-      res.json({
-        msg: 'get API',
-      });
-    });
-
-    this.app.put('/api', (req, res) => {
-      res.json({
-        msg: 'put API',
-      });
-    });
-
-    this.app.post('/api', (req, res) => {
-      res.status(201).json({
-        msg: 'post API',
-      });
-    });
-
-    this.app.delete('/api', (req, res) => {
-      res.json({
-        msg: 'delete API',
-      });
-    });
-
-    this.app.patch('/api', (req, res) => {
-      res.json({
-        msg: 'patch API',
-      });
-    });
+    // Middleware condicional para cargar las rutas.
+    this.app.use(this.usuariosPath, router);
   }
 
   listen() {
