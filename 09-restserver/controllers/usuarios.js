@@ -1,10 +1,29 @@
 // Esto se importa más que nada para tener la ayuda de VSCode con el autocompletado.
 // En TypeScript no haría falta.
-import { response } from 'express';
+import { response, request } from 'express';
 
-export const usuariosGet = (req, res = response) => {
+// Query Parameters
+// Son los que se encuentran en la ruta tras una interrogación.
+// Ejemplo:  http://localhost:8080/api/usuarios?q=hola&nombre=joseManuel&apikey=123456
+// En este caso los query params son: q, nombre y apikey
+// Express los parsea por nosotros sin tener que hacer nada.
+// Para recuperarlos accedemos a req.query
+export const usuariosGet = (req = request, res = response) => {
+  // Obteniéndo los query parameters con desestructuración para obtener lo que realmente me interesa.
+  // Y puedo indicar valores por defecto, lo que está muy bien para paginación
+  const { q, nombre = 'No name', apikey, page = 1, limit } = req.query;
+
+  // También es posible
+  // const query = req.query;
+
   res.json({
     msg: 'get API - controlador',
+    //query,
+    q,
+    nombre,
+    apikey,
+    page,
+    limit,
   });
 };
 
@@ -22,9 +41,16 @@ export const usuariosPost = (req, res) => {
   });
 };
 
+// Obtener parámetros de segmento.
+// Los obtenemos de req.params y se recuperan como string.
 export const usuariosPut = (req, res) => {
+  const { id } = req.params;
+  // Esto también vale
+  //const id = req.params.id;
+
   res.json({
     msg: 'put API - controlador',
+    id,
   });
 };
 

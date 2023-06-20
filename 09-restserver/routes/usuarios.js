@@ -13,7 +13,14 @@ router.get('/', usuariosGet);
 
 router.post('/', usuariosPost);
 
-router.put('/', usuariosPut);
+// Obtener parámetros de segmento
+// Ejemplo: http://localhost:8080/api/usuarios/10
+// El parámetro de segmento del ejemplo es el 10
+//
+// Para obtenerlo de forma dinámica indicamos con dos puntos la variable que obtendrá ese valor.
+// En nuestra ruta ya hemos configurado para Express la varible id. Express lo parsea y lo da
+// en una propiedad de los params del objeto request.
+router.put('/:id', usuariosPut);
 
 router.patch('/', usuariosPatch);
 
