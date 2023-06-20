@@ -27,7 +27,7 @@ npm init -y
 npm i
 ```
 
-3. Renombrar el archivo example.env a .env
+3. Renombrar el archivo example.env a .env e informar la conexión a MongoDB.
 
 4. Para ejecutar:
 
