@@ -9,8 +9,16 @@ export const usuariosGet = (req, res = response) => {
 };
 
 export const usuariosPost = (req, res) => {
+  // Extrayendo el body de la request.
+  // Habría que hacer una limpieza de la información para evitar que vengan scripts o inyección maliciosa...
+  // Esto lo vamos a ver después.
+  // Es muy común desestructurar lo que necesitamos del body. Sería una pequeña validación para recoger lo que realmente queremos.
+  const { nombre, edad } = req.body;
+
   res.status(201).json({
     msg: 'post API - controlador',
+    nombre,
+    edad,
   });
 };
 

@@ -34,6 +34,13 @@ export class Server {
     // CORS
     this.app.use(cors());
 
+    // ¿Cómo se recibe la información del body de una petición POST, PUT ...?
+    // Hay que configurar un middleware para decir que la información que viene hacia el backend mediante una
+    // petición POST, PUT o DELETE va a venir en formato JSON.
+    // Si la información va a venir en XML... habrá que configurar otros middlewares, pero lo normal es comunicarnos con JSON.
+    // Lectura y parseo del body.
+    this.app.use(express.json());
+
     // Directorio público
     // Ahora para la ruta / se sirve index.html incluido en el directorio public.
     this.app.use(express.static('public'));
