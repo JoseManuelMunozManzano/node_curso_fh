@@ -2,6 +2,9 @@
 // En TypeScript no haría falta.
 import { response, request } from 'express';
 
+// Los modelos se usan en el controlador.
+import { Usuario } from '../models/usuario.js';
+
 // Query Parameters
 // Son los que se encuentran en la ruta tras una interrogación.
 // Ejemplo:  http://localhost:8080/api/usuarios?q=hola&nombre=joseManuel&apikey=123456
@@ -27,17 +30,26 @@ export const usuariosGet = (req = request, res = response) => {
   });
 };
 
-export const usuariosPost = (req, res) => {
+export const usuariosPost = async (req, res) => {
   // Extrayendo el body de la request.
   // Habría que hacer una limpieza de la información para evitar que vengan scripts o inyección maliciosa...
   // Esto lo vamos a ver después.
   // Es muy común desestructurar lo que necesitamos del body. Sería una pequeña validación para recoger lo que realmente queremos.
-  const { nombre, edad } = req.body;
+  // const { nombre, edad } = req.body;
+
+  const body = req.body;
+
+  // Creando instancia de nuestro modelo.
+  // Solo los campos que están definidos en el modelo se pasan a la instancia usuario.
+  // Con esto evitamos inyecciones maliciosas...
+  const usuario = new Usuario(body);
+
+  // Grabando el registro en Mongo.
+  await usuario.save();
 
   res.status(201).json({
     msg: 'post API - controlador',
-    nombre,
-    edad,
+    usuario,
   });
 };
 
