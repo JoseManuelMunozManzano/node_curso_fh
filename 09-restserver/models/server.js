@@ -11,6 +11,7 @@ import express from 'express';
 import cors from 'cors';
 
 import { router } from '../routes/usuarios.js';
+import { dbConnection } from '../database/config.js';
 
 export class Server {
   constructor() {
@@ -23,11 +24,20 @@ export class Server {
     // desarrolladores que vengan a ver mi servidor puedan ver las rutas disponibles.
     this.usuariosPath = '/api/usuarios';
 
+    // Conectar a base de datos
+    this.conectarDB();
+
     // Middlewares: Funciones que añaden nueva funcionalidad a mi webserver
     this.middlewares();
 
     // Rutas de mi aplicación.
     this.routes();
+  }
+
+  async conectarDB() {
+    // Aquí podría leerse de process.env una variable de entorno para saber si estamos en desarrollo o producción
+    // y con un if crearnos otra conexión diferente.
+    await dbConnection();
   }
 
   middlewares() {
