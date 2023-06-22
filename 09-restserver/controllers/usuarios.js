@@ -1,6 +1,7 @@
 // Esto se importa más que nada para tener la ayuda de VSCode con el autocompletado.
 // En TypeScript no haría falta.
 import { response, request } from 'express';
+import bcryptjs from 'bcryptjs';
 
 // Los modelos se usan en el controlador.
 import { Usuario } from '../models/usuario.js';
@@ -35,14 +36,24 @@ export const usuariosPost = async (req, res) => {
   // Habría que hacer una limpieza de la información para evitar que vengan scripts o inyección maliciosa...
   // Esto lo vamos a ver después.
   // Es muy común desestructurar lo que necesitamos del body. Sería una pequeña validación para recoger lo que realmente queremos.
-  // const { nombre, edad } = req.body;
-
-  const body = req.body;
+  const { nombre, correo, password, rol } = req.body;
 
   // Creando instancia de nuestro modelo.
   // Solo los campos que están definidos en el modelo se pasan a la instancia usuario.
   // Con esto evitamos inyecciones maliciosas...
-  const usuario = new Usuario(body);
+  const usuario = new Usuario({ nombre, correo, password, rol });
+
+  // TODO: Verificar si el correo existe
+
+  // Encriptar la contraseña.
+  // salt por defecto es 10
+  // npm i bcryptjs
+  // hashSync encripta en una sola vía.
+  // La contraseña cae en usuario.password
+  const salt = bcryptjs.genSaltSync();
+  usuario.password = bcryptjs.hashSync(password, salt);
+
+  // TODO: No devolver en la respuesta JSON el password
 
   // Grabando el registro en Mongo.
   await usuario.save();
