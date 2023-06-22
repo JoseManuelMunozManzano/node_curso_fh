@@ -2,6 +2,7 @@
 // En TypeScript no haría falta.
 import { response, request } from 'express';
 import bcryptjs from 'bcryptjs';
+import { validationResult } from 'express-validator';
 
 // Los modelos se usan en el controlador.
 import { Usuario } from '../models/usuario.js';
@@ -32,6 +33,13 @@ export const usuariosGet = (req = request, res = response) => {
 };
 
 export const usuariosPost = async (req, res) => {
+  // TODO: Esto no pertenece a este lugar. Lo vamos a hacer así y luego lo vamos a optimizar.
+  // Recogemos los errores de express-validator y si hay los devolvemos.
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json(errors);
+  }
+
   // Extrayendo el body de la request.
   // Habría que hacer una limpieza de la información para evitar que vengan scripts o inyección maliciosa...
   // Esto lo vamos a ver después.
@@ -43,7 +51,16 @@ export const usuariosPost = async (req, res) => {
   // Con esto evitamos inyecciones maliciosas...
   const usuario = new Usuario({ nombre, correo, password, rol });
 
-  // TODO: Verificar si el correo existe
+  // Verificar si el correo existe.
+  // Esta forma que aparece aquí es una forma más fea de validar.
+  // Vamos a usar express-validator.
+  //
+  // const existeEmail = await Usuario.findOne({ correo });
+  // if (!existeEmail) {
+  //   return res.status(400).json({
+  //     msg: 'Ese correo ya está registrado',
+  //   });
+  // }
 
   // Encriptar la contraseña.
   // salt por defecto es 10
