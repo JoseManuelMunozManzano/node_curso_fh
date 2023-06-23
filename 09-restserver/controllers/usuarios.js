@@ -2,7 +2,6 @@
 // En TypeScript no haría falta.
 import { response, request } from 'express';
 import bcryptjs from 'bcryptjs';
-import { validationResult } from 'express-validator';
 
 // Los modelos se usan en el controlador.
 import { Usuario } from '../models/usuario.js';
@@ -33,13 +32,6 @@ export const usuariosGet = (req = request, res = response) => {
 };
 
 export const usuariosPost = async (req, res) => {
-  // TODO: Esto no pertenece a este lugar. Lo vamos a hacer así y luego lo vamos a optimizar.
-  // Recogemos los errores de express-validator y si hay los devolvemos.
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json(errors);
-  }
-
   // Extrayendo el body de la request.
   // Habría que hacer una limpieza de la información para evitar que vengan scripts o inyección maliciosa...
   // Esto lo vamos a ver después.

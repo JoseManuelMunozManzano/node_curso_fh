@@ -1,6 +1,9 @@
 import { Router } from 'express';
-import { usuariosDelete, usuariosGet, usuariosPatch, usuariosPost, usuariosPut } from '../controllers/usuarios.js';
 import { check } from 'express-validator';
+
+import { validarCampos } from '../middlewares/validar-campos.js';
+
+import { usuariosDelete, usuariosGet, usuariosPatch, usuariosPost, usuariosPut } from '../controllers/usuarios.js';
 
 // Es a este router al que se le van a configurar las rutas.
 export const router = Router();
@@ -25,7 +28,19 @@ router.get('/', usuariosGet);
 //
 // Las validaciones que no se cumplan se van almacenando y en mi controlador saltan.
 // NOTA: Se pueden hacer validaciones personalizadas contra BD y las haremos más adelante.
-router.post('/', [check('correo', 'El correo no es válido').isEmail()], usuariosPost);
+router.post(
+  '/',
+  [
+    check('nombre', 'El nombre es obligatorio').not().isEmpty(),
+    check('password', 'El password debe de ser de más de 6 letras').isLength({ min: 6 }),
+    check('correo', 'El correo no es válido').isEmail(),
+    // Más adelante el rol vendrá de BD.
+    check('rol', 'No es un rol válido').isIn('ADMIN_ROLE', 'USER_ROLE'),
+    // Este middleware va a final. Cuando tengo todas las validaciones del check hechas, reviso los errores.
+    validarCampos,
+  ],
+  usuariosPost
+);
 
 // Obtener parámetros de segmento
 // Ejemplo: http://localhost:8080/api/usuarios/10
