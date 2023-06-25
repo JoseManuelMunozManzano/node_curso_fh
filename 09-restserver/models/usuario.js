@@ -35,7 +35,8 @@ const UsuarioSchema = Schema({
     // y no venga el dato.
     required: true,
     // Valores posibles de este campo.
-    enum: ['ADMIN_ROLE', 'USER_ROLE'],
+    // Como los recuperamos de BD se va a quitar para no tener que estar hardcodeando esto.
+    // enum: ['ADMIN_ROLE', 'USER_ROLE', 'VENTAS_ROLE'],
   },
 
   estado: {

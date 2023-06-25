@@ -4,6 +4,7 @@ import { check } from 'express-validator';
 import { validarCampos } from '../middlewares/validar-campos.js';
 
 import { usuariosDelete, usuariosGet, usuariosPatch, usuariosPost, usuariosPut } from '../controllers/usuarios.js';
+import { Role } from '../models/role.js';
 
 // Es a este router al que se le van a configurar las rutas.
 export const router = Router();
@@ -34,8 +35,16 @@ router.post(
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
     check('password', 'El password debe de ser de más de 6 letras').isLength({ min: 6 }),
     check('correo', 'El correo no es válido').isEmail(),
-    // Más adelante el rol vendrá de BD.
-    check('rol', 'No es un rol válido').isIn(['ADMIN_ROLE', 'USER_ROLE']),
+    // check('rol', 'No es un rol válido').isIn(['ADMIN_ROLE', 'USER_ROLE']),
+    // Evaluando rol cuando viene de BD. Es una validación personalizada. Por ahora se hace aquí,
+    // pero luego esto se sacará fuera.
+    check('rol').custom(async (rol = '') => {
+      const existeRol = await Role.findOne({ rol });
+      if (!existeRol) {
+        // Este error no termina el programa. Es un error personalizado que será atrapado en el custom.
+        throw new Error(`El rol ${rol} no está registrado en la BD`);
+      }
+    }),
     // Este middleware va a final. Cuando tengo todas las validaciones del check hechas, reviso los errores.
     validarCampos,
   ],
