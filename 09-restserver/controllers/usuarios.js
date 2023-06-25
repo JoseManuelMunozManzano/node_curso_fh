@@ -62,14 +62,24 @@ export const usuariosPost = async (req, res) => {
 
 // Obtener parámetros de segmento.
 // Los obtenemos de req.params y se recuperan como string.
-export const usuariosPut = (req, res) => {
+export const usuariosPut = async (req, res) => {
   const { id } = req.params;
-  // Esto también vale
-  //const id = req.params.id;
+
+  // Desestructuro porque no quiero actualizar google y el password hay que actualizarlo con encriptación.
+  // Lo demás si es susceptible de actualizarse de forma normal.
+  const { password, google, ...resto } = req.body;
+
+  // TODO: validar contra BD
+  if (password) {
+    const salt = bcryptjs.genSaltSync();
+    resto.password = bcryptjs.hashSync(password, salt);
+  }
+
+  const usuario = await Usuario.findByIdAndUpdate(id, resto, { new: true });
 
   res.json({
     msg: 'put API - controlador',
-    id,
+    usuario,
   });
 };
 
