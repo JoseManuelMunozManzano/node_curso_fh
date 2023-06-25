@@ -44,15 +44,13 @@ export const usuariosPost = async (req, res) => {
   const usuario = new Usuario({ nombre, correo, password, rol });
 
   // Verificar si el correo existe.
-  // Esta forma que aparece aquí es una forma más fea de validar.
-  // Vamos a usar express-validator.
-  //
-  // const existeEmail = await Usuario.findOne({ correo });
-  // if (!existeEmail) {
-  //   return res.status(400).json({
-  //     msg: 'Ese correo ya está registrado',
-  //   });
-  // }
+  // Volvemos a poner esto porque la duplicidad de registro no se trata en validator y revienta la app.
+  const existeEmail = await Usuario.findOne({ correo });
+  if (existeEmail) {
+    return res.status(400).json({
+      msg: 'Ese correo ya está registrado',
+    });
+  }
 
   // Encriptar la contraseña.
   // salt por defecto es 10
