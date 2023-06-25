@@ -22,9 +22,31 @@ export const usuariosGet = async (req = request, res = response) => {
 
   const { limite = 5, desde = 0 } = req.query;
 
-  const usuarios = await Usuario.find().skip(desde).limit(limite);
+  // Solo debemos trabajar con registro con estado a true. Los estado a false están de baja.
+  const query = { estado: true };
+
+  // const usuarios = await Usuario.find(query).skip(desde).limit(limite);
+
+  // Esto es mala praxis. El problema es que arriba tenemos un await, por lo que tenemos que esperar
+  // a que se realice el find antes de hacer este conteo de registros, que también es await.
+  // Si el find de arriba tarda 2 sg y este conteo tarda otros 2 sg, ya van 4 sg, es mucho tiempo.
+  // Pero lo importante, es que estas 2 consultas NO DEPENDEN UNA DE OTRA, por lo que no tenemos
+  // por qué esperar a que se haga el find para hacer el conteo.
+  // Lo que si es necesario es que ambas sean bloqueantes (await) porque no queremos devolver la
+  // respuesta antes de que terminen de hacerse las consultas.
+  //
+  // const total = await Usuario.countDocuments(query);
+
+  // Para solucionar este problema, se usa un Promise.all, que permite mandar un array con todas
+  // las promesas que queremos ejecutar. Si una da error, las demás también terminan en error.
+  // Y ponemos el await para que espera a la resolución de ambas promesas.
+  const [total, usuarios] = await Promise.all([
+    Usuario.countDocuments(query),
+    Usuario.find(query).skip(desde).limit(limite),
+  ]);
 
   res.json({
+    total,
     usuarios,
   });
 };
