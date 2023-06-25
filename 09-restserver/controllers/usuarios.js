@@ -45,6 +45,7 @@ export const usuariosPost = async (req, res) => {
 
   // Verificar si el correo existe.
   // Volvemos a poner esto porque la duplicidad de registro no se trata en validator y revienta la app.
+  // Esto lo vamos a acabar moviendo para tener una validación y no tener el código aquí.
   const existeEmail = await Usuario.findOne({ correo });
   if (existeEmail) {
     return res.status(400).json({
@@ -59,8 +60,6 @@ export const usuariosPost = async (req, res) => {
   // La contraseña cae en usuario.password
   const salt = bcryptjs.genSaltSync();
   usuario.password = bcryptjs.hashSync(password, salt);
-
-  // TODO: No devolver en la respuesta JSON el password
 
   // Grabando el registro en Mongo.
   await usuario.save();

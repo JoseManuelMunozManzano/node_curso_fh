@@ -51,6 +51,17 @@ const UsuarioSchema = Schema({
   },
 });
 
+// Sobreescribimos el método toJSON para quitar el password y la version (__v) cuando se hace un POST.
+// Cuando llamemos al toJSON se va a ejcutar esta función.
+// IMPORTANTE: Tiene que ser una function. No vale función de flecha porque necesitamos que el this haga referencia
+// a la instancia creada.
+UsuarioSchema.methods.toJSON = function () {
+  // Esto genera la instancia con los valores respectivos, como si fuera un objeto literal de JavaScript.
+  // De ahí cogemos usuario con todos los campos salvo __v y password, y los devolvemos.
+  const { __v, password, ...usuario } = this.toObject();
+  return usuario;
+};
+
 // La BD cuando cree la tabla (colección en Mongo), automáticamente lo pone en plural, en este caso la colección
 // se llamará Usuarios
 export const Usuario = model('Usuario', UsuarioSchema);
