@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
-import { esRolValido } from '../helpers/db-validators.js';
+import { emailExiste, esRolValido } from '../helpers/db-validators.js';
 import { validarCampos } from '../middlewares/validar-campos.js';
 
 import { usuariosDelete, usuariosGet, usuariosPatch, usuariosPost, usuariosPut } from '../controllers/usuarios.js';
@@ -35,6 +35,7 @@ router.post(
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
     check('password', 'El password debe de ser de más de 6 letras').isLength({ min: 6 }),
     check('correo', 'El correo no es válido').isEmail(),
+    check('correo').custom(emailExiste),
     // check('rol', 'No es un rol válido').isIn(['ADMIN_ROLE', 'USER_ROLE']),
     // Evaluando rol cuando viene de BD. Es una validación personalizada.
     check('rol').custom(esRolValido), // Esto es lo mismo que: check('rol').custom((rol) => esRolValido(rol)),

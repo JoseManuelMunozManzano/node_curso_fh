@@ -43,16 +43,6 @@ export const usuariosPost = async (req, res) => {
   // Con esto evitamos inyecciones maliciosas...
   const usuario = new Usuario({ nombre, correo, password, rol });
 
-  // Verificar si el correo existe.
-  // Volvemos a poner esto porque la duplicidad de registro no se trata en validator y revienta la app.
-  // Esto lo vamos a acabar moviendo para tener una validación y no tener el código aquí.
-  const existeEmail = await Usuario.findOne({ correo });
-  if (existeEmail) {
-    return res.status(400).json({
-      msg: 'Ese correo ya está registrado',
-    });
-  }
-
   // Encriptar la contraseña.
   // salt por defecto es 10
   // npm i bcryptjs
