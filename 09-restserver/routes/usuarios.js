@@ -35,7 +35,7 @@ router.post(
     check('password', 'El password debe de ser de más de 6 letras').isLength({ min: 6 }),
     check('correo', 'El correo no es válido').isEmail(),
     // Más adelante el rol vendrá de BD.
-    check('rol', 'No es un rol válido').isIn('ADMIN_ROLE', 'USER_ROLE'),
+    check('rol', 'No es un rol válido').isIn(['ADMIN_ROLE', 'USER_ROLE']),
     // Este middleware va a final. Cuando tengo todas las validaciones del check hechas, reviso los errores.
     validarCampos,
   ],
