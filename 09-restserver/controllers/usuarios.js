@@ -106,8 +106,18 @@ export const usuariosPatch = (req, res) => {
   });
 };
 
-export const usuariosDelete = (req, res) => {
-  res.json({
-    msg: 'delete API - controlador',
-  });
+export const usuariosDelete = async (req, res) => {
+  const { id } = req.params;
+
+  // Borrado físico: Se indica por motivos de aprendizaje porque lo suyo
+  // es NO borrar registros, sino ponerlos con un status a false, para
+  // indicar que no hay que tener en cuenta ese registro y a la vez no
+  // perder la integridad referencial.
+  //
+  // const usuario = await Usuario.findByIdAndDelete(id);
+
+  // Cambiando estado del usuario
+  const usuario = await Usuario.findByIdAndUpdate(id, { estado: false }, { new: true });
+
+  res.json(usuario);
 };
