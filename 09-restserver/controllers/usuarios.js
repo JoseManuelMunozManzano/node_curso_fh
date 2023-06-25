@@ -67,9 +67,9 @@ export const usuariosPut = async (req, res) => {
 
   // Desestructuro porque no quiero actualizar google y el password hay que actualizarlo con encriptación.
   // Lo demás si es susceptible de actualizarse de forma normal.
-  const { password, google, ...resto } = req.body;
+  // Validación: Quitamos también _id porque eso lo maneja Mongo. Si lo han intentado actualizar, aquí lo excluimos.
+  const { _id, password, google, ...resto } = req.body;
 
-  // TODO: validar contra BD
   if (password) {
     const salt = bcryptjs.genSaltSync();
     resto.password = bcryptjs.hashSync(password, salt);

@@ -15,3 +15,10 @@ export const emailExiste = async (correo = '') => {
     throw new Error(`El correo ${correo} ya está registrado en la BD`);
   }
 };
+
+export const usuarioExistePorId = async (id) => {
+  const existeUsuario = await Usuario.findById(id);
+  if (!existeUsuario) {
+    throw new Error(`El id no existe ${id}`);
+  }
+};

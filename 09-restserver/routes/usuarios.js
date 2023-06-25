@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
-import { emailExiste, esRolValido } from '../helpers/db-validators.js';
+import { emailExiste, esRolValido, usuarioExistePorId } from '../helpers/db-validators.js';
 import { validarCampos } from '../middlewares/validar-campos.js';
 
 import { usuariosDelete, usuariosGet, usuariosPatch, usuariosPost, usuariosPut } from '../controllers/usuarios.js';
@@ -52,7 +52,17 @@ router.post(
 // Para obtenerlo de forma dinámica indicamos con dos puntos la variable que obtendrá ese valor.
 // En nuestra ruta ya hemos configurado para Express la varible id. Express lo parsea y lo da
 // en una propiedad de los params del objeto request.
-router.put('/:id', usuariosPut);
+router.put(
+  '/:id',
+  // Validaciones a la hora de hacer put
+  [
+    check('id', 'No es un ID válido').isMongoId(),
+    check('id').custom(usuarioExistePorId),
+    check('rol').custom(esRolValido),
+    validarCampos,
+  ],
+  usuariosPut
+);
 
 router.patch('/', usuariosPatch);
 
