@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { check } from 'express-validator';
+import { check, query } from 'express-validator';
 
 import { emailExiste, esRolValido, usuarioExistePorId } from '../helpers/db-validators.js';
 import { validarCampos } from '../middlewares/validar-campos.js';
@@ -14,7 +14,16 @@ export const router = Router();
 // Ver directorio controllers.
 //
 // NOTA: NO se ejecuta la función, no hay paréntesis. Se está mandando la referencia.
-router.get('/', usuariosGet);
+router.get(
+  '/',
+  // Validaciones sobre query parameters
+  [
+    query('limite', "El valor de 'limite' debe ser numérico").isNumeric().optional(),
+    query('desde', "El valor de 'desde' debe ser numérico").isNumeric().optional(),
+    validarCampos,
+  ],
+  usuariosGet
+);
 
 // Se instala express-validator para realizar validaciones.
 // npm i express-validator

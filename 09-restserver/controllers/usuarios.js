@@ -12,22 +12,20 @@ import { Usuario } from '../models/usuario.js';
 // En este caso los query params son: q, nombre y apikey
 // Express los parsea por nosotros sin tener que hacer nada.
 // Para recuperarlos accedemos a req.query
-export const usuariosGet = (req = request, res = response) => {
+export const usuariosGet = async (req = request, res = response) => {
   // Obteniéndo los query parameters con desestructuración para obtener lo que realmente me interesa.
   // Y puedo indicar valores por defecto, lo que está muy bien para paginación
-  const { q, nombre = 'No name', apikey, page = 1, limit } = req.query;
+  // const { q, nombre = 'No name', apikey, page = 1, limit } = req.query;
 
   // También es posible
   // const query = req.query;
 
+  const { limite = 5, desde = 0 } = req.query;
+
+  const usuarios = await Usuario.find().skip(desde).limit(limite);
+
   res.json({
-    msg: 'get API - controlador',
-    //query,
-    q,
-    nombre,
-    apikey,
-    page,
-    limit,
+    usuarios,
   });
 };
 
@@ -77,10 +75,7 @@ export const usuariosPut = async (req, res) => {
 
   const usuario = await Usuario.findByIdAndUpdate(id, resto, { new: true });
 
-  res.json({
-    msg: 'put API - controlador',
-    usuario,
-  });
+  res.json(usuario);
 };
 
 export const usuariosPatch = (req, res) => {
