@@ -58,7 +58,10 @@ const UsuarioSchema = Schema({
 UsuarioSchema.methods.toJSON = function () {
   // Esto genera la instancia con los valores respectivos, como si fuera un objeto literal de JavaScript.
   // De ahí cogemos usuario con todos los campos salvo __v y password, y los devolvemos.
-  const { __v, password, ...usuario } = this.toObject();
+  //
+  // Vamos a cambiar _id por uid por temas visuales.
+  const { __v, password, _id, ...usuario } = this.toObject();
+  usuario.uid = _id;
   return usuario;
 };
 
