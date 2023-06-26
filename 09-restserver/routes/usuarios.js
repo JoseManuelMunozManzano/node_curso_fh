@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { check, query } from 'express-validator';
+import { body, param, query } from 'express-validator';
 
 import { validarCampos } from '../middlewares/validar-campos.js';
 import { validarJWT } from '../middlewares/validar-jwt.js';
@@ -20,8 +20,8 @@ router.get(
   '/',
   // Validaciones sobre query parameters
   [
-    query('limite', "El valor de 'limite' debe ser numérico").isNumeric().optional(),
-    query('desde', "El valor de 'desde' debe ser numérico").isNumeric().optional(),
+    param('limite', "El valor de 'limite' debe ser numérico").isNumeric().optional(),
+    param('desde', "El valor de 'desde' debe ser numérico").isNumeric().optional(),
     validarCampos,
   ],
   usuariosGet
@@ -43,13 +43,13 @@ router.get(
 router.post(
   '/',
   [
-    check('nombre', 'El nombre es obligatorio').not().isEmpty(),
-    check('password', 'El password debe de ser de más de 6 letras').isLength({ min: 6 }),
-    check('correo', 'El correo no es válido').isEmail(),
-    check('correo').custom(emailExiste),
+    body('nombre', 'El nombre es obligatorio').not().isEmpty(),
+    body('password', 'El password debe de ser de más de 6 letras').isLength({ min: 6 }),
+    body('correo', 'El correo no es válido').isEmail(),
+    body('correo').custom(emailExiste),
     // check('rol', 'No es un rol válido').isIn(['ADMIN_ROLE', 'USER_ROLE']),
     // Evaluando rol cuando viene de BD. Es una validación personalizada.
-    check('rol').custom(esRolValido), // Esto es lo mismo que: check('rol').custom((rol) => esRolValido(rol)),
+    body('rol').custom(esRolValido), // Esto es lo mismo que: check('rol').custom((rol) => esRolValido(rol)),
     // Este middleware va a final. Cuando tengo todas las validaciones del check hechas, reviso los errores.
     validarCampos,
   ],
@@ -67,9 +67,9 @@ router.put(
   '/:id',
   // Validaciones a la hora de hacer put
   [
-    check('id', 'No es un ID válido').isMongoId(),
-    check('id').custom(usuarioExistePorId),
-    check('rol').custom(esRolValido),
+    param('id', 'No es un ID válido').isMongoId(),
+    param('id').custom(usuarioExistePorId),
+    body('rol').custom(esRolValido),
     validarCampos,
   ],
   usuariosPut
@@ -80,8 +80,11 @@ router.patch('/', usuariosPatch);
 // Vamos a proteger esta ruta para que no pueda ejecutarse si no tenemos un token.
 // Esto se hace con un middleware personalizado, y lo ponemos a ejecutar el primero porque si
 // da error ya no queremos que siga ejecutando nada más.
+//
+// NOTA: Se cambia check() por body(), cookies(), header(), param() o query() según proceda
+// porque se indica que check() puede ser inseguro.
 router.delete(
   '/:id',
-  [validarJWT, check('id', 'No es un ID válido').isMongoId(), check('id').custom(usuarioExistePorId), validarCampos],
+  [validarJWT, param('id', 'No es un ID válido').isMongoId(), param('id').custom(usuarioExistePorId), validarCampos],
   usuariosDelete
 );

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { check } from 'express-validator';
+import { body } from 'express-validator';
 
 import { validarCampos } from '../middlewares/validar-campos.js';
 
@@ -11,9 +11,9 @@ export const router = Router();
 router.post(
   '/login',
   [
-    check('correo', 'El correo es obligatorio').isEmail(),
+    body('correo', 'El correo es obligatorio').isEmail(),
     // Solo se indica que debe venir la contraseña porque no queremos dar pistas de como luce una contraseña en nuestra app.
-    check('password', 'La contraseña es obligatorio').not().isEmpty(),
+    body('password', 'La contraseña es obligatorio').not().isEmpty(),
     validarCampos,
   ],
   login
