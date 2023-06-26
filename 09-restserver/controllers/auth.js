@@ -3,6 +3,8 @@ import bcryptjs from 'bcryptjs';
 
 import { Usuario } from '../models/usuario.js';
 
+import { generarJWT } from '../helpers/generar-jwt.js';
+
 export const login = async (req, res = response) => {
   const { correo, password } = req.body;
 
@@ -34,9 +36,14 @@ export const login = async (req, res = response) => {
     }
 
     // Generar el JWT
+    // Instalado: npm i jsonwebtoken
+    // Este paquete no tiene una promesa para generar el JWT, es con un callback y necesitamos transformarlo
+    // a una promesa. Con eso podemos usar el await.
+    const token = await generarJWT(usuario.id);
 
     res.json({
-      msg: 'Login ok',
+      usuario,
+      token,
     });
   } catch (error) {
     console.log(error);
