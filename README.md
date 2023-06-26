@@ -113,6 +113,26 @@ Se van a cubrir los siguientes temas:
 - Códigos de error en Express
 - Archivos para la configuración global
 - Tips importantes en Postman
+- Definir los alcances de nuestro RESTServer
+- CRUD
+- Encriptación de contraseñas
+- Validaciones personalizadas
+- Creación de roles
+- Conexiones con MLAB
+- Despliegue de base de datos en la nube
+- Conexión con Robo 3T con base de datos en la nube
+- Configuración de variables de entorno
+- Borrado de archivos
+  - Eliminado físico de la base de datos
+  - Eliminación por estado en un campo de la colección
+- Introducción a los tokens
+- JWT
+- Login personalizado
+- Protección de rutas vía token
+- Leer payload del token sin la firma
+- Tips importantes para POSTMan
+- Despliegues en Heroku para pruebas en producción
+- Uso de Middleware
 
 ### 10-restserver_respaldo
 

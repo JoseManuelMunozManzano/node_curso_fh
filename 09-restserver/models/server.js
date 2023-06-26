@@ -10,7 +10,8 @@ import express from 'express';
 // https://www.npmjs.com/package/cors
 import cors from 'cors';
 
-import { router } from '../routes/usuarios.js';
+import { router as userRoute } from '../routes/usuarios.js';
+import { router as authRoute } from '../routes/auth.js';
 import { dbConnection } from '../database/config.js';
 
 export class Server {
@@ -23,6 +24,7 @@ export class Server {
     // Es un poco difícil ver las rutas de la aplicación, por lo que se incluye aquí, para que otros
     // desarrolladores que vengan a ver mi servidor puedan ver las rutas disponibles.
     this.usuariosPath = '/api/usuarios';
+    this.authPath = '/api/auth';
 
     // Conectar a base de datos
     this.conectarDB();
@@ -62,7 +64,8 @@ export class Server {
   // Se crea el directorio routes para las rutas.
   routes() {
     // Middleware condicional para cargar las rutas.
-    this.app.use(this.usuariosPath, router);
+    this.app.use(this.authPath, authRoute);
+    this.app.use(this.usuariosPath, userRoute);
   }
 
   // Dejando listo el proyecto para desplegar en Railway.
