@@ -1,8 +1,10 @@
 import { Router } from 'express';
 import { check, query } from 'express-validator';
 
-import { emailExiste, esRolValido, usuarioExistePorId } from '../helpers/db-validators.js';
 import { validarCampos } from '../middlewares/validar-campos.js';
+import { validarJWT } from '../middlewares/validar-jwt.js';
+
+import { emailExiste, esRolValido, usuarioExistePorId } from '../helpers/db-validators.js';
 
 import { usuariosDelete, usuariosGet, usuariosPatch, usuariosPost, usuariosPut } from '../controllers/usuarios.js';
 
@@ -75,8 +77,11 @@ router.put(
 
 router.patch('/', usuariosPatch);
 
+// Vamos a proteger esta ruta para que no pueda ejecutarse si no tenemos un token.
+// Esto se hace con un middleware personalizado, y lo ponemos a ejecutar el primero porque si
+// da error ya no queremos que siga ejecutando nada más.
 router.delete(
   '/:id',
-  [check('id', 'No es un ID válido').isMongoId(), check('id').custom(usuarioExistePorId), validarCampos],
+  [validarJWT, check('id', 'No es un ID válido').isMongoId(), check('id').custom(usuarioExistePorId), validarCampos],
   usuariosDelete
 );
