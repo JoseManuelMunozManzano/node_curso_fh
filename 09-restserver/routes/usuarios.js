@@ -3,6 +3,7 @@ import { body, param, query } from 'express-validator';
 
 import { validarCampos } from '../middlewares/validar-campos.js';
 import { validarJWT } from '../middlewares/validar-jwt.js';
+import { esAdminRol } from '../middlewares/validar-roles.js';
 
 import { emailExiste, esRolValido, usuarioExistePorId } from '../helpers/db-validators.js';
 
@@ -81,10 +82,18 @@ router.patch('/', usuariosPatch);
 // Esto se hace con un middleware personalizado, y lo ponemos a ejecutar el primero porque si
 // da error ya no queremos que siga ejecutando nada más.
 //
+// Se añade middleware para validar que la persona que quiere borrar tenga que tener el rol de administrador.
+//
 // NOTA: Se cambia check() por body(), cookies(), header(), param() o query() según proceda
 // porque se indica que check() puede ser inseguro.
 router.delete(
   '/:id',
-  [validarJWT, param('id', 'No es un ID válido').isMongoId(), param('id').custom(usuarioExistePorId), validarCampos],
+  [
+    validarJWT,
+    esAdminRol,
+    param('id', 'No es un ID válido').isMongoId(),
+    param('id').custom(usuarioExistePorId),
+    validarCampos,
+  ],
   usuariosDelete
 );
