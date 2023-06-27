@@ -34,6 +34,12 @@ Se van a cubrir los siguientes temas:
 - Tips importantes para POSTMan
 - Despliegues en Heroku para pruebas en producción
 - Uso de Middleware
+- Generar API Key de Google
+- Generar API Secret
+- Usar librerías de Google para la validación de tokens
+- Tips importantes en PostMan
+- Uso del Google SignIn en el Front-End
+- Crear usuarios personalizados en base a respuestas de Google
 
 1. Para crear el proyecto:
 
