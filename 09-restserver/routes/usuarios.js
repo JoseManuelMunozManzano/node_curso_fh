@@ -3,7 +3,7 @@ import { body, param, query } from 'express-validator';
 
 import { validarCampos } from '../middlewares/validar-campos.js';
 import { validarJWT } from '../middlewares/validar-jwt.js';
-import { esAdminRol } from '../middlewares/validar-roles.js';
+import { esAdminRol, tieneRol } from '../middlewares/validar-roles.js';
 
 import { emailExiste, esRolValido, usuarioExistePorId } from '../helpers/db-validators.js';
 
@@ -90,7 +90,20 @@ router.delete(
   '/:id',
   [
     validarJWT,
-    esAdminRol,
+    // esAdminRol,
+    // Cambiamos que el usuario tenga rol de admnistrador a que cualquier usuario con este tipo de rol
+    // pueda ejecutar el delete.
+    //
+    // COMO RECIBIR ARGUMENTOS EN MIDDLEWARES
+    // Esta función tiene que regresar otra función que se va a ejecutar cuando alguien pase por el middleware tieneRol()
+    //
+    // Es decir, el arreglo de middlewares espera que le pasemos una función.
+    // Si nuestra función no necesita argumentos, lo ideal sería únicamente mandar la referencia ya que no necesitamos que se
+    // ejecute justo en el momento que se interpreta el archivo, sino únicamente cuando llamen a la ruta (ej: validarJWT arriba)
+    // Sin embargo, si nuestra función requiere argumentos, necesitarás llamarla para poder pasárselos, pero como el arreglo de
+    // middlewares está esperando una función, tendrás que tener esto en cuenta y hacer el return de toda una función, como
+    // hacemos aquí en tieneRol
+    tieneRol('ADMIN_ROLE', 'VENTAS_ROLE', 'OTRO_ROLE'),
     param('id', 'No es un ID válido').isMongoId(),
     param('id').custom(usuarioExistePorId),
     validarCampos,
