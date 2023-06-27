@@ -75,7 +75,6 @@ export const usuariosPost = async (req, res) => {
   await usuario.save();
 
   res.status(201).json({
-    msg: 'post API - controlador',
     usuario,
   });
 };
@@ -109,9 +108,6 @@ export const usuariosPatch = (req, res) => {
 export const usuariosDelete = async (req, res) => {
   const { id } = req.params;
 
-  // En el request tenemos el uid porque lo hemos añadido en el middleware validarJWT.
-  // const uid = req.uid;
-
   // Borrado físico: Se indica por motivos de aprendizaje porque lo suyo
   // es NO borrar registros, sino ponerlos con un status a false, para
   // indicar que no hay que tener en cuenta ese registro y a la vez no
@@ -122,6 +118,9 @@ export const usuariosDelete = async (req, res) => {
   // Cambiando estado del usuario
   const usuario = await Usuario.findByIdAndUpdate(id, { estado: false }, { new: true });
 
-  // res.json({ usuario, uid });
+  // Obteniendo el usuario autenticado que hemos dejado en la request en validar-jwt
+  // const usuarioAutenticado = req.usuario;
+
+  // res.json({ usuario, usuarioAutenticado });
   res.json(usuario);
 };
