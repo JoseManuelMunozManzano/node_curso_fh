@@ -3,7 +3,7 @@ import { body } from 'express-validator';
 
 import { validarCampos } from '../middlewares/validar-campos.js';
 
-import { login } from '../controllers/auth.js';
+import { googleSignIn, login } from '../controllers/auth.js';
 
 // Es a este router al que se le van a configurar las rutas.
 export const router = Router();
@@ -18,3 +18,5 @@ router.post(
   ],
   login
 );
+
+router.post('/google', [body('id_token', 'id_token es necesario').not().isEmpty(), validarCampos], googleSignIn);
