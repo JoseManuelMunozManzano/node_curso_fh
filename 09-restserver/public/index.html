@@ -3,9 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Acceso Denegado</title>
+    <title>Google Sign-in</title>
   </head>
   <body>
-    <h1>Acceso Denegado</h1>
+    <h1>Google Sign-in</h1>
+    <hr />
+
+    <!-- Cogido de: https://developers.google.com/identity/gsi/web/guides/display-button?hl=es-419#html -->
+    <!-- La parte data-login_uri="https://your.domain/your_login_endpoint" la he quitado porque
+      la vamos a hacer por código para tener más control -->
+    <!-- Y se ha añadido la parte data-callback para indicar la función que se va a llamar cuando se realiza una 
+      autenticación de manera exitosa. Esto sustituye a data-login-uri y se encuentra en la página:
+      https://developers.google.com/identity/gsi/web/guides/handle-credential-responses-js-functions?hl=es-419 -->
+    <div id="g_id_onload" data-client_id="indicar_aqui_GOOGLE_CLIENT_ID" data-auto_prompt="false" data-callback="handleCredentialResponse">
+    <div
+      class="g_id_signin"
+      data-type="standard"
+      data-size="large"
+      data-theme="outline"
+      data-text="sign_in_with"
+      data-shape="rectangular"
+      data-logo_alignment="left"
+    ></div>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- Cogido de: https://developers.google.com/identity/gsi/web/guides/handle-credential-responses-js-functions?hl=es-419 -->
+    <!-- Pero se ha cambiado por completo -->
+    <!-- Mantener como función tradicional porque no funciona con función de flecha -->
+    <script>
+      function handleCredentialResponse(response) {
+        // Google Token: ID_TOKEN
+        console.log('id_token', response.credential);
+      }
+    </script>
   </body>
 </html>
