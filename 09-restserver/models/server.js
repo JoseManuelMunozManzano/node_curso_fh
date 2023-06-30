@@ -12,6 +12,7 @@ import cors from 'cors';
 
 import { router as userRoute } from '../routes/usuarios.js';
 import { router as authRoute } from '../routes/auth.js';
+import { router as categoriasRouter } from '../routes/categorias.js';
 import { dbConnection } from '../database/config.js';
 
 export class Server {
@@ -23,8 +24,13 @@ export class Server {
     this.port = process.env.PORT || 8080;
     // Es un poco difícil ver las rutas de la aplicación, por lo que se incluye aquí, para que otros
     // desarrolladores que vengan a ver mi servidor puedan ver las rutas disponibles.
-    this.usuariosPath = '/api/usuarios';
-    this.authPath = '/api/auth';
+    //
+    // Cuando ya hay muchas rutas, también se suelen indicar en un objeto.
+    this.paths = {
+      auth: '/api/auth',
+      categorias: '/api/categorias',
+      usuarios: '/api/usuarios',
+    };
 
     // Conectar a base de datos
     this.conectarDB();
@@ -64,8 +70,9 @@ export class Server {
   // Se crea el directorio routes para las rutas.
   routes() {
     // Middleware condicional para cargar las rutas.
-    this.app.use(this.authPath, authRoute);
-    this.app.use(this.usuariosPath, userRoute);
+    this.app.use(this.paths.auth, authRoute);
+    this.app.use(this.paths.categorias, categoriasRouter);
+    this.app.use(this.paths.usuarios, userRoute);
   }
 
   // Dejando listo el proyecto para desplegar en Railway.
