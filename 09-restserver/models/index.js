@@ -1,4 +1,4 @@
-export { Categoria } from './categoria';
-export { Role } from './role';
-export { Server } from './server';
-export { Usuario } from './usuario';
+export * from './categoria.js';
+export * from './role.js';
+export * from './server.js';
+export * from './usuario.js';
