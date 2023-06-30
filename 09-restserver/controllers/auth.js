@@ -4,6 +4,7 @@ import bcryptjs from 'bcryptjs';
 import { Usuario } from '../models/usuario.js';
 
 import { generarJWT } from '../helpers/generar-jwt.js';
+import { googleVerify } from '../helpers/google-verify.js';
 
 export const login = async (req, res = response) => {
   const { correo, password } = req.body;
@@ -56,8 +57,17 @@ export const login = async (req, res = response) => {
 export const googleSignIn = async (req, res = response) => {
   const { id_token } = req.body;
 
-  res.json({
-    msg: 'Todo bien!',
-    id_token,
-  });
+  try {
+    const { nombre, img, correo } = await googleVerify(id_token);
+
+    res.json({
+      msg: 'Todo bien!',
+      id_token,
+    });
+  } catch (error) {
+    json.status(400).json({
+      ok: false,
+      msg: 'El token no se puedo verificar',
+    });
+  }
 };
