@@ -26,6 +26,8 @@
       data-logo_alignment="left"
     ></div>
 
+    <button id="google_signout">Signout</button>
+
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
     <!-- Cogido de: https://developers.google.com/identity/gsi/web/guides/handle-credential-responses-js-functions?hl=es-419 -->
@@ -51,8 +53,25 @@
           .then(resp => resp.json())
           .then(resp => {
             console.log(resp)
+            // Grabamos el correo para poder usarlo luego en el Google Signout de abajo
+            localStorage.setItem('email', resp.usuario.correo);
           })
           .catch(console.warn);
+      }
+
+      // Google Signout
+      // Necesitamos el correo de la persona que se autenticó.
+      const button = document.getElementById('google_signout');
+      button.onclick = () => {
+        console.log(google.accounts.id);
+        google.accounts.id.disableAutoSelect();
+
+        // Se revoca el acceso y se recarga la página para limpiar cualquier cosa que esté en el estado
+        // de nuestra aplicación.
+        google.accounts.id.revoke(localStorage.getItem('email'), done => {
+          localStorage.clear();
+          location.reload();
+        });
       }
     </script>
   </body>
