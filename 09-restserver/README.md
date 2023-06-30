@@ -40,6 +40,10 @@ Se van a cubrir los siguientes temas:
 - Tips importantes en PostMan
 - Uso del Google SignIn en el Front-End
 - Crear usuarios personalizados en base a respuestas de Google
+- CRUD de categorías y productos
+- Relaciones
+- Populate
+- Búsquedas
 
 1. Para crear el proyecto:
 
