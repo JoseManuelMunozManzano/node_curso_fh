@@ -12,6 +12,7 @@ import cors from 'cors';
 
 import { router as userRoute } from '../routes/usuarios.js';
 import { router as authRoute } from '../routes/auth.js';
+import { router as productosRouter } from '../routes/productos.js';
 import { router as categoriasRouter } from '../routes/categorias.js';
 import { dbConnection } from '../database/config.js';
 
@@ -29,6 +30,7 @@ export class Server {
     this.paths = {
       auth: '/api/auth',
       categorias: '/api/categorias',
+      productos: '/api/productos',
       usuarios: '/api/usuarios',
     };
 
@@ -72,6 +74,7 @@ export class Server {
     // Middleware condicional para cargar las rutas.
     this.app.use(this.paths.auth, authRoute);
     this.app.use(this.paths.categorias, categoriasRouter);
+    this.app.use(this.paths.productos, productosRouter);
     this.app.use(this.paths.usuarios, userRoute);
   }
 

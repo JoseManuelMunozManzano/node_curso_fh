@@ -1,4 +1,4 @@
-import { Categoria, Role, Usuario } from '../models/index.js';
+import { Categoria, Producto, Role, Usuario } from '../models/index.js';
 
 export const esRolValido = async (rol = '') => {
   const existeRol = await Role.findOne({ rol });
@@ -29,6 +29,17 @@ export const categoriaExistePorId = async (id) => {
   const existeCategoria = await Categoria.findById(id);
 
   if (!existeCategoria) {
+    throw new Error(`El id no existe ${id}`);
+  }
+};
+
+/**
+ * Validadores de Producto
+ */
+export const productoExistePorId = async (id) => {
+  const existeProducto = await Producto.findById(id);
+
+  if (!existeProducto) {
     throw new Error(`El id no existe ${id}`);
   }
 };
