@@ -1,12 +1,12 @@
 import { response } from 'express';
 import { isValidObjectId } from 'mongoose';
 
-import { Usuario } from '../models/usuario.js';
 import { Categoria } from '../models/categoria.js';
 import { Producto } from '../models/producto.js';
+import { Usuario } from '../models/usuario.js';
 
 // Si al día de mañana creamos otra colección tenemos que añadirla aquí.
-const coleccionesPermitidas = ['usuarios', 'categoria', 'productos', 'roles'];
+const coleccionesPermitidas = ['usuarios', 'categorias', 'productos', 'roles'];
 
 // Recibo la response porque aquí voy a salir.
 // Vamos a buscar por el mongoId del usuario o por el nombre del usuario.
@@ -45,6 +45,42 @@ const buscarUsuarios = async (termino = '', res = response) => {
   });
 };
 
+const buscarCategorias = async (termino, res = response) => {
+  const esMongoId = isValidObjectId(termino);
+
+  if (esMongoId) {
+    const categoria = await Categoria.findById(termino);
+    return res.json({
+      results: categoria ? [categoria] : [],
+    });
+  }
+
+  const regex = new RegExp(termino, 'i');
+
+  const categorias = await Categoria.find({ nombre: regex, estado: true });
+  res.json({
+    results: categorias,
+  });
+};
+
+const buscarProductos = async (termino, res = response) => {
+  const esMongoID = isValidObjectId(termino);
+
+  if (esMongoID) {
+    const producto = await Producto.findById(termino).populate('categoria', 'nombre');
+    return res.json({
+      results: producto ? [producto] : [],
+    });
+  }
+
+  const regex = new RegExp(termino, 'i');
+
+  const productos = await Producto.find({ nombre: regex, estado: true }).populate('categoria', 'nombre');
+  res.json({
+    results: productos,
+  });
+};
+
 export const buscar = (req, res = response) => {
   const { coleccion, termino } = req.params;
 
@@ -58,20 +94,21 @@ export const buscar = (req, res = response) => {
     case 'usuarios':
       buscarUsuarios(termino, res);
       break;
-    case 'categoria':
+    case 'categorias':
+      buscarCategorias(termino, res);
       break;
     case 'productos':
+      buscarProductos(termino, res);
       break;
-    case 'roles':
-      break;
+    // No hago roles
     default:
       res.status(500).json({
         msg: 'Se me olvidó hacer esta búsqueda',
       });
   }
-
-  // res.json({
-  //   coleccion,
-  //   termino,
-  // });
 };
+
+// Nota: Para buscar todos los productos cuya categoria sea ese ID, se puede escribir en el Filter de Mongo Compass,
+// En productos:
+// {categoria: ObjectId('649f0f4e72e259ffdcd79e65')}
+// Por supuesto, también se puede hacer un nuevo router/controller para hacer este tipo de búsquedas.
