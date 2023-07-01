@@ -11,6 +11,7 @@ import express from 'express';
 import cors from 'cors';
 
 import { router as userRoute } from '../routes/usuarios.js';
+import { router as buscarRoute } from '../routes/buscar.js';
 import { router as authRoute } from '../routes/auth.js';
 import { router as productosRouter } from '../routes/productos.js';
 import { router as categoriasRouter } from '../routes/categorias.js';
@@ -29,6 +30,7 @@ export class Server {
     // Cuando ya hay muchas rutas, también se suelen indicar en un objeto.
     this.paths = {
       auth: '/api/auth',
+      buscar: '/api/buscar',
       categorias: '/api/categorias',
       productos: '/api/productos',
       usuarios: '/api/usuarios',
@@ -73,6 +75,7 @@ export class Server {
   routes() {
     // Middleware condicional para cargar las rutas.
     this.app.use(this.paths.auth, authRoute);
+    this.app.use(this.paths.buscar, buscarRoute);
     this.app.use(this.paths.categorias, categoriasRouter);
     this.app.use(this.paths.productos, productosRouter);
     this.app.use(this.paths.usuarios, userRoute);
