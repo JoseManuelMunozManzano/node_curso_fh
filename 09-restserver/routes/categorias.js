@@ -1,9 +1,17 @@
 import { Router } from 'express';
-import { body } from 'express-validator';
+import { body, param } from 'express-validator';
 
-import { validarCampos, validarJWT } from '../middlewares/index.js';
+import { esAdminRol, validarCampos, validarJWT } from '../middlewares/index.js';
 
-import { crearCategoria } from '../controllers/categorias.js';
+import { categoriaExistePorId } from '../helpers/db-validators.js';
+
+import {
+  actualizarCategoria,
+  borrarCategoria,
+  crearCategoria,
+  obtenerCategoriaPorId,
+  obtenerCategorias,
+} from '../controllers/categorias.js';
 
 export const router = Router();
 
@@ -12,14 +20,22 @@ export const router = Router();
  */
 
 // Obtener todas las categorias - público
-router.get('/', (req, res) => {
-  res.json('get');
-});
+router.get(
+  '/',
+  [
+    param('limite', "El valor de 'limite' debe ser numérico").isNumeric().optional(),
+    param('desde', "El valor de 'desde' debe ser numérico").isNumeric().optional(),
+    validarCampos,
+  ],
+  obtenerCategorias
+);
 
 // Obtener una categoria por id - público
-router.get('/:id', (req, res) => {
-  res.json('get - id');
-});
+router.get(
+  '/:id',
+  [param('id', 'No es un ID válido').isMongoId(), param('id').custom(categoriaExistePorId), validarCampos],
+  obtenerCategoriaPorId
+);
 
 // Crear categoría - privado - cualquier persona con un token válido
 router.post(
@@ -29,11 +45,31 @@ router.post(
 );
 
 // Actualizar categoría - privado - cualquier persona con un token válido
-router.put('/:id', (req, res) => {
-  res.json('put');
-});
+router.put(
+  '/:id',
+  [
+    validarJWT,
+    param('id', 'No es un ID válido').isMongoId(),
+    param('id').custom(categoriaExistePorId),
+    body('nombre', 'El nombre es obligatorio').not().isEmpty(),
+    validarCampos,
+  ],
+  actualizarCategoria
+);
 
 // Borrar categoría - Admin
-router.delete('/:id', (req, res) => {
-  res.json('delete');
-});
+router.delete(
+  '/:id',
+  [
+    validarJWT,
+    esAdminRol,
+    param('id', 'No es un ID válido').isMongoId(),
+    validarCampos,
+    // Para evitar el error raro que sale indicando que se ha querido castear el id y no ha podido
+    // se puede hacer dos veces el validar campos de esta forma, para que, si falla arriba, no llege
+    // aquí, o si funcionó arriba y falla ahora, se vuelva a validarCampos.
+    param('id').custom(categoriaExistePorId),
+    validarCampos,
+  ],
+  borrarCategoria
+);

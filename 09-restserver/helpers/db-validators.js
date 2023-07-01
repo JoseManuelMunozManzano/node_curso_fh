@@ -1,5 +1,4 @@
-import { Role } from '../models/role.js';
-import { Usuario } from '../models/usuario.js';
+import { Categoria, Role, Usuario } from '../models/index.js';
 
 export const esRolValido = async (rol = '') => {
   const existeRol = await Role.findOne({ rol });
@@ -19,6 +18,17 @@ export const emailExiste = async (correo = '') => {
 export const usuarioExistePorId = async (id) => {
   const existeUsuario = await Usuario.findById(id);
   if (!existeUsuario) {
+    throw new Error(`El id no existe ${id}`);
+  }
+};
+
+/**
+ * Validadores de Categoría
+ */
+export const categoriaExistePorId = async (id) => {
+  const existeCategoria = await Categoria.findById(id);
+
+  if (!existeCategoria) {
     throw new Error(`El id no existe ${id}`);
   }
 };
