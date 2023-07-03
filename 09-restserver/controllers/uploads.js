@@ -21,3 +21,9 @@ export const cargarArchivo = async (req, res = response) => {
     res.status(400).json({ msg });
   }
 };
+
+export const actualizarArchivo = async (req, res = response) => {
+  const { id, coleccion } = req.params;
+
+  res.json({ id, coleccion });
+};

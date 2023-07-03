@@ -43,3 +43,19 @@ export const productoExistePorId = async (id) => {
     throw new Error(`El id no existe ${id}`);
   }
 };
+
+/**
+ * Validar colecciones permitidas
+ */
+export const coleccionesPermitidas = (coleccion = '', colecciones = []) => {
+  const incluida = colecciones.includes(coleccion);
+  if (!incluida) {
+    throw new Error(`La colección ${coleccion} no es permitida - ${colecciones}`);
+  }
+
+  // Como a esta función se la llama con paréntesis y parámetros desde uploads.router tenemos
+  // que indicar el return a true.
+  // En las otras funciones de arriba realmente deberíamos haberlo hecho también, pero
+  // es implícito.
+  return true;
+};
