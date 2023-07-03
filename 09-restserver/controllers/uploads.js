@@ -1,6 +1,7 @@
 import { response } from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { v4 as uuidv4 } from 'uuid';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -33,17 +34,24 @@ export const cargarArchivo = (req, res = response) => {
     });
   }
 
-  res.json({ extension });
+  // Renombramos la imagen al colocarla en la carpeta uploads. Con esto evitamos que haya problemas si
+  // se suben dos archivos que se llaman igual. Se usa el uuid para que el nombre sea único.
+  // Instalación:
+  // npm i uuid
+  const nombreTemp = uuidv4() + '.' + extension;
 
-  // const uploadPath = path.join(__dirname, '../uploads/', archivo.name);
+  const uploadPath = path.join(__dirname, '../uploads/', nombreTemp);
 
-  // archivo.mv(uploadPath, (err) => {
-  //   if (err) {
-  //     // Los internal server errors hay que ponerlos en consola y mandarlos al front.
-  //     console.log(err);
-  //     return res.status(500).json({ err });
-  //   }
+  archivo.mv(uploadPath, (err) => {
+    if (err) {
+      // Los internal server errors hay que ponerlos en consola y mandarlos al front.
+      console.log(err);
+      return res.status(500).json({ err });
+    }
 
-  //   res.json({ msg: 'File uploaded to ' + uploadPath });
-  // });
+    res.json({ msg: 'File uploaded to ' + uploadPath });
+  });
 };
+
+// NOTA: Falta llevarse este código a un helper para poder reutilizarlo.
+// Hará la validación, regresará el url y creará la ubicación final si no existiera.
