@@ -9,6 +9,7 @@ import express from 'express';
 // desde el front de React o Angular...
 // https://www.npmjs.com/package/cors
 import cors from 'cors';
+import fileUpload from 'express-fileupload';
 
 import { router as userRoute } from '../routes/usuarios.js';
 import { router as buscarRoute } from '../routes/buscar.js';
@@ -68,6 +69,14 @@ export class Server {
     // Directorio público
     // Ahora para la ruta / se sirve index.html incluido en el directorio public.
     this.app.use(express.static('public'));
+
+    // Fileupload - Carga de archivos
+    this.app.use(
+      fileUpload({
+        useTempFiles: true,
+        tempFileDir: '/tmp/',
+      })
+    );
   }
 
   // Se va a separar las rutas del controlador.

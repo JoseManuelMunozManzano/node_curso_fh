@@ -1,5 +1,7 @@
-// La subida de archivos no deja de ser otra ruta
-
+// La subida de archivos no deja de ser otra ruta.
+//
+// Se instala un paquete que se usa para cargar archivos y se dejan en la carpeta uploads del proyecto.
+// https://www.npmjs.com/package/express-fileupload
 import { Router } from 'express';
 import { body } from 'express-validator';
 
