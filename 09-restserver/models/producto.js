@@ -33,6 +33,8 @@ const ProductoSchema = Schema({
   descripcion: { type: String, default: '' },
 
   disponible: { type: Boolean, default: true },
+
+  img: { type: String },
 });
 
 // Otra forma de hacerlo, sin descomponer el usuario ni la categoria.

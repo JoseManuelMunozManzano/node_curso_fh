@@ -15,6 +15,7 @@ export const router = Router();
 // La subida de archivos se suele hacer con un post.
 router.post('/', cargarArchivo);
 
+// Actualizar la imagen de usuario o producto.
 router.put(
   '/:coleccion/:id',
   [

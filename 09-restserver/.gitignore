@@ -4,3 +4,5 @@ node_modules/
 
 uploads/*.jpg
 uploads/imgs/*.jpg
+uploads/usuarios/*.jpg
+uploads/productos/*.jpg
