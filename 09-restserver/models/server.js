@@ -15,6 +15,7 @@ import { router as buscarRoute } from '../routes/buscar.js';
 import { router as authRoute } from '../routes/auth.js';
 import { router as productosRouter } from '../routes/productos.js';
 import { router as categoriasRouter } from '../routes/categorias.js';
+import { router as uploadsRouter } from '../routes/uploads.js';
 import { dbConnection } from '../database/config.js';
 
 export class Server {
@@ -33,6 +34,7 @@ export class Server {
       buscar: '/api/buscar',
       categorias: '/api/categorias',
       productos: '/api/productos',
+      uploads: '/api/uploads',
       usuarios: '/api/usuarios',
     };
 
@@ -78,6 +80,7 @@ export class Server {
     this.app.use(this.paths.buscar, buscarRoute);
     this.app.use(this.paths.categorias, categoriasRouter);
     this.app.use(this.paths.productos, productosRouter);
+    this.app.use(this.paths.uploads, uploadsRouter);
     this.app.use(this.paths.usuarios, userRoute);
   }
 
