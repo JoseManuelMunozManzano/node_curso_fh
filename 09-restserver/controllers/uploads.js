@@ -11,10 +11,13 @@ export const cargarArchivo = async (req, res = response) => {
     return;
   }
 
-  // Imágenes
-  const nombre = await subirArchivo(req.files);
-
-  res.json({
-    nombre,
-  });
+  // Para manejar el reject de la promise colocamos el await entre un try-catch
+  try {
+    // Ejemplo de subida de txt, md en carpeta uploads/textos
+    // const nombre = await subirArchivo(req.files, ['txt', 'md'], 'textos');
+    const nombre = await subirArchivo(req.files, undefined, 'imgs');
+    res.json({ nombre });
+  } catch (msg) {
+    res.status(400).json({ msg });
+  }
 };

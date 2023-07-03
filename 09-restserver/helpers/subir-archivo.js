@@ -33,6 +33,9 @@ export const subirArchivo = (files, extensionesValidas = extensionesValidasImg, 
     //      Funcionaría si la carpeta fuera /public, pero con la carpeta /uploads no funciona.
     const uploadPath = path.join(__dirname, '../uploads/', carpeta, nombreTemp);
 
+    // Con la opción createParentPath, si al hacer el mv la carpeta no existe, la crea.
+    // Cuidado porque un código malicioso podría crear carpetas.
+    // Añadido en server.js, en el middleware de fileUpload.
     archivo.mv(uploadPath, (err) => {
       if (err) {
         reject(err);
