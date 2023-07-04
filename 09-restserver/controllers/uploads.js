@@ -3,11 +3,21 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 
+// Subir las imágenes a un hosting independiente para poder consumirlas, hacer backups físicos...
+// Se va a usar cloudinary: https://cloudinary.com/
+// No es obligatorio usar este paquete porque Cloudinary también expone una API con la que se pueden subir
+// las imágenes, pero con el paquete es aún más fácil.
+// https://www.npmjs.com/package/cloudinary
+import { v2 as cloudinary } from 'cloudinary';
+
 import { Usuario, Producto } from '../models/index.js';
 
 import { subirArchivo } from '../helpers/index.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Para que cloudinary sepa que usuario es
+cloudinary.config(process.env.CLOUDINARY_URL);
 
 // en req.files aparecen los ficheros que se han mandado en el body de la petición post.
 // Para añadir al body un fichero en Postman, usar body y form-data.
@@ -66,6 +76,56 @@ export const actualizarArchivo = async (req, res = response) => {
 
   const nombre = await subirArchivo(req.files, undefined, coleccion);
   modelo.img = nombre;
+
+  await modelo.save();
+
+  res.json(modelo);
+};
+
+// Clodinary - Actualizar imagen del usuario o producto.
+export const actualizarArchivoCloudinary = async (req, res = response) => {
+  const { id, coleccion } = req.params;
+
+  // Para actualizar solo necesito establecer la propiedad img del módelo Usuario o Producto.
+  let modelo;
+
+  switch (coleccion) {
+    case 'usuarios':
+      modelo = await Usuario.findById(id);
+      if (!modelo) {
+        return res.status(400).json({
+          msg: `No existe un usuario con el id ${id}`,
+        });
+      }
+      break;
+
+    case 'productos':
+      modelo = await Producto.findById(id);
+      if (!modelo) {
+        return res.status(400).json({
+          msg: `No existe un producto con el id ${id}`,
+        });
+      }
+      break;
+
+    default:
+      return res.status(500).json({ msg: 'Se me olvidó validar esto' });
+  }
+
+  // Limpiar imágenes previas
+  // Primero verificamos que la propiedad img exista (esto no quiere decir que exista la imagen, ojo!)
+  if (modelo.img) {
+  }
+
+  // Subir a Cloudinary. Se indica un path que existe en mi backend.
+  // En concreto, el objeto req.files.archivo contiene:
+  //   data: <Buffer>   --> Esto se podría enviar. Es la data de la imagen.
+  //   tempFilePath     --> Pero es mejor enviar esto. Es un path temporal donde se encuentra alojada mi imagen.
+  // El método upload() regresa una promesa con la información de la response y de la response solo necesitamos
+  // la propiedad secure_url, que contiene la url de la imagen ya en Cloudinary.
+  const { tempFilePath } = req.files.archivo;
+  const { secure_url } = await cloudinary.uploader.upload(tempFilePath);
+  modelo.img = secure_url;
 
   await modelo.save();
 

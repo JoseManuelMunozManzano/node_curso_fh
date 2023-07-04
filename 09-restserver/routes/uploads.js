@@ -8,7 +8,12 @@ import { param } from 'express-validator';
 import { coleccionesPermitidas } from '../helpers/db-validators.js';
 import { validarArchivoSubir, validarCampos } from '../middlewares/index.js';
 
-import { actualizarArchivo, cargarArchivo, mostrarImagen } from '../controllers/uploads.js';
+import {
+  // actualizarArchivo,
+  actualizarArchivoCloudinary,
+  cargarArchivo,
+  mostrarImagen,
+} from '../controllers/uploads.js';
 
 export const router = Router();
 
@@ -26,7 +31,9 @@ router.put(
     //param('coleccion', 'No es una colección permitida').isIn(['usuarios', 'productos']),
     validarCampos,
   ],
-  actualizarArchivo
+  // Cambiamos esta por la de Cloudinary
+  // actualizarArchivo
+  actualizarArchivoCloudinary
 );
 
 router.get(
