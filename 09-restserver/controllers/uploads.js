@@ -71,3 +71,46 @@ export const actualizarArchivo = async (req, res = response) => {
 
   res.json(modelo);
 };
+
+export const mostrarImagen = async (req, res = response) => {
+  const { id, coleccion } = req.params;
+
+  // Para actualizar solo necesito establecer la propiedad img del módelo Usuario o Producto.
+  let modelo;
+
+  switch (coleccion) {
+    case 'usuarios':
+      modelo = await Usuario.findById(id);
+      if (!modelo) {
+        return res.status(400).json({
+          msg: `No existe un usuario con el id ${id}`,
+        });
+      }
+      break;
+
+    case 'productos':
+      modelo = await Producto.findById(id);
+      if (!modelo) {
+        return res.status(400).json({
+          msg: `No existe un producto con el id ${id}`,
+        });
+      }
+      break;
+
+    default:
+      return res.status(500).json({ msg: 'Se me olvidó validar esto' });
+  }
+
+  // Mostrar la imagen.
+  // Ya vimos que hacía falta crear un endpoint porque la imagen NO la tenemos en la carpeta
+  // public, por lo que no valía ni siquiera pulsar el enlace devuelto en los post/put anteriores.
+  // Lo genial de esto es que estamos escondiendo la ubicación del archivo y su extensión.
+  if (modelo.img) {
+    const pathImagen = path.join(__dirname, '../uploads', coleccion, modelo.img);
+    if (fs.existsSync(pathImagen)) {
+      return res.sendFile(pathImagen);
+    }
+  }
+
+  res.json({ msg: 'Falta placeholder' });
+};

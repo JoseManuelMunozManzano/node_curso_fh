@@ -8,7 +8,7 @@ import { param } from 'express-validator';
 import { coleccionesPermitidas } from '../helpers/db-validators.js';
 import { validarArchivoSubir, validarCampos } from '../middlewares/index.js';
 
-import { actualizarArchivo, cargarArchivo } from '../controllers/uploads.js';
+import { actualizarArchivo, cargarArchivo, mostrarImagen } from '../controllers/uploads.js';
 
 export const router = Router();
 
@@ -27,4 +27,14 @@ router.put(
     validarCampos,
   ],
   actualizarArchivo
+);
+
+router.get(
+  '/:coleccion/:id',
+  [
+    param('id', 'El id debe de ser de Mongo').isMongoId(),
+    param('coleccion').custom((c) => coleccionesPermitidas(c, ['usuarios', 'productos'])),
+    validarCampos,
+  ],
+  mostrarImagen
 );
