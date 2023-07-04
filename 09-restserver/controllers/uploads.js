@@ -115,6 +115,14 @@ export const actualizarArchivoCloudinary = async (req, res = response) => {
   // Limpiar imágenes previas
   // Primero verificamos que la propiedad img exista (esto no quiere decir que exista la imagen, ojo!)
   if (modelo.img) {
+    // Solo necesitamos el identificador único de la imagen que nos da Cloudinary.
+    // Pero ese id no lo tenemos en BD. En BD tenemos la secure_url (path) que contiene ese id.
+    // Hay que extraerlo.
+    const nombreArr = modelo.img.split('/');
+    const nombre = nombreArr[nombreArr.length - 1];
+    const [public_id] = nombre.split('.');
+    // Podríamos poner await, pero no necesitamos esperar que se borre.
+    cloudinary.uploader.destroy(public_id);
   }
 
   // Subir a Cloudinary. Se indica un path que existe en mi backend.
