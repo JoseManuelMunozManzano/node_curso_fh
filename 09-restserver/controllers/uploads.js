@@ -112,5 +112,7 @@ export const mostrarImagen = async (req, res = response) => {
     }
   }
 
-  res.json({ msg: 'Falta placeholder' });
+  // Mostrar imagen por defecto si no hay.
+  const pathImagen = path.join(__dirname, '../assets/no-image.jpg');
+  res.sendFile(pathImagen);
 };
