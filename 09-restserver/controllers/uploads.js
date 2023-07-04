@@ -1,8 +1,13 @@
 import { response } from 'express';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
 
 import { Usuario, Producto } from '../models/index.js';
 
 import { subirArchivo } from '../helpers/index.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // en req.files aparecen los ficheros que se han mandado en el body de la petición post.
 // Para añadir al body un fichero en Postman, usar body y form-data.
@@ -47,6 +52,16 @@ export const actualizarArchivo = async (req, res = response) => {
 
     default:
       return res.status(500).json({ msg: 'Se me olvidó validar esto' });
+  }
+
+  // Limpiar imágenes previas
+  // Primero verificamos que la propiedad img exista (esto no quiere decir que exista la imagen, ojo!)
+  if (modelo.img) {
+    // Hay que borrar la imagen del servidor si existe
+    const pathImagen = path.join(__dirname, '../uploads', coleccion, modelo.img);
+    if (fs.existsSync(pathImagen)) {
+      fs.unlinkSync(pathImagen);
+    }
   }
 
   const nombre = await subirArchivo(req.files, undefined, coleccion);
