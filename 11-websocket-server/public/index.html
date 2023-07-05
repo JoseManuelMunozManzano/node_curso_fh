@@ -16,6 +16,11 @@
     <h1 class="mt-2">Socket Client</h1>
     <hr />
 
+    <!-- Necesario importar socket.io.js porque desde socket-client.js necesitamos llamar a una instrucción
+        que se encuentra en este paquete -->
+    <!-- Si vamos al navegador y refrescamos y no vemos error es que está bien instalado. -->
+    <!-- Y si vamos a la pestaña Network, veremos que aparece el paquete socket-client.js y socket.io.js -->
+    <script src="./socket.io/socket.io.js"></script>
     <script src="./js/socket-client.js"></script>
   </body>
 </html>
