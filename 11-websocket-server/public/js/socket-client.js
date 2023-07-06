@@ -14,7 +14,7 @@ const socket = io();
 // on es para escuchar eventos
 // Cuando me conecto al servidor
 socket.on('connect', () => {
-  console.log('Conectado');
+  // console.log('Conectado');
 
   lblOffline.style.display = 'none';
   lblOnline.style.display = '';
@@ -22,10 +22,14 @@ socket.on('connect', () => {
 
 // Cuando me desconecto del servidor
 socket.on('disconnect', () => {
-  console.log('Desconectado del servidor');
+  // console.log('Desconectado del servidor');
 
   lblOnline.style.display = 'none';
   lblOffline.style.display = '';
+});
+
+socket.on('enviar-mensaje', (payload) => {
+  console.log(payload);
 });
 
 btnEnviar.addEventListener('click', () => {
@@ -37,6 +41,6 @@ btnEnviar.addEventListener('click', () => {
   };
 
   // emit es para emitir eventos
-  // Lo normal es enviar objetos, no texto plano. Así podemos enviar de una tacada todo lo que queremos.
+  // Lo normal es enviar objetos literales, no texto plano. Así podemos enviar de una tacada todo lo que queremos.
   socket.emit('enviar-mensaje', payload);
 });

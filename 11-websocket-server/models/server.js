@@ -66,7 +66,8 @@ export class Server {
 
       // Escuchando
       socket.on('enviar-mensaje', (payload) => {
-        console.log(payload);
+        // Mandar el mensaje a todos los clientes conectados.
+        this.io.emit('enviar-mensaje', payload);
       });
     });
   }
