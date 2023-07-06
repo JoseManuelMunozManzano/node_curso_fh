@@ -1,6 +1,8 @@
 // Referencias del HTML
 const lblOnline = document.querySelector('#lblOnline');
 const lblOffline = document.querySelector('#lblOffline');
+const txtMensaje = document.querySelector('#txtMensaje');
+const btnEnviar = document.querySelector('#btnEnviar');
 
 // Aquí estará toda la configuración y comunicación que vamos a tener, usando WebSockets, con el servidor.
 
@@ -9,6 +11,7 @@ const socket = io();
 
 // Listeners: son observables que están escuchando cambios o eventos
 
+// on es para escuchar eventos
 // Cuando me conecto al servidor
 socket.on('connect', () => {
   console.log('Conectado');
@@ -23,4 +26,17 @@ socket.on('disconnect', () => {
 
   lblOnline.style.display = 'none';
   lblOffline.style.display = '';
+});
+
+btnEnviar.addEventListener('click', () => {
+  const mensaje = txtMensaje.value;
+  const payload = {
+    mensaje,
+    id: '123ABC',
+    fecha: new Date().getTime(),
+  };
+
+  // emit es para emitir eventos
+  // Lo normal es enviar objetos, no texto plano. Así podemos enviar de una tacada todo lo que queremos.
+  socket.emit('enviar-mensaje', payload);
 });

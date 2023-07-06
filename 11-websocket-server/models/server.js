@@ -63,6 +63,11 @@ export class Server {
       socket.on('disconnect', () => {
         console.log('Cliente Desconectado', socket.id);
       });
+
+      // Escuchando
+      socket.on('enviar-mensaje', (payload) => {
+        console.log(payload);
+      });
     });
   }
 
