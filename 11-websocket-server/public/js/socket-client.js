@@ -40,7 +40,13 @@ btnEnviar.addEventListener('click', () => {
     fecha: new Date().getTime(),
   };
 
-  // emit es para emitir eventos
-  // Lo normal es enviar objetos literales, no texto plano. Así podemos enviar de una tacada todo lo que queremos.
-  socket.emit('enviar-mensaje', payload);
+  // emit es para emitir eventos.
+  // Lo normal es enviar objetos literales, no texto plano. Así podemos enviar de una tacada todo lo que queremos al server.
+  //
+  // Retroalimentación/feedback al cliente que emitió el mensaje hacia el server.
+  // emit() puede tener un tercer argumento, un callback que recibe lo que sea que se le mande desde el server.
+  // Este callback se ejecuta en el servidor cuando todo termina (ya sea bien o mal) y solo lo recibe el cliente que emite el mensaje.
+  socket.emit('enviar-mensaje', payload, (id) => {
+    console.log('Desde el server', id);
+  });
 });
