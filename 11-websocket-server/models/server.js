@@ -10,6 +10,8 @@ import cors from 'cors';
 import { createServer } from 'http';
 import { Server as ServerIo } from 'socket.io';
 
+import { socketController } from '../sockets/controller.js';
+
 export class Server {
   constructor() {
     this.app = express();
@@ -53,33 +55,7 @@ export class Server {
     // a nuestra aplicación de Express (this.app), pero están conectados.
     // Son como dos mundos separados pero conectados.
     // Ver cliente (public/js/socket-client.js) para ver como se conecta.
-    this.io.on('connection', (socket) => {
-      // Aunque tenemos un id, estos son muy volátiles (cambian al recargar el navegador)
-      // y nosotros no debemos usarlos. Es solo para manejo interno de socket.io
-      // console.log('Cliente conectado', socket.id);
-
-      // Se maneja automáticamente la desconexión, es decir, si en el navegador hay una conexión y recargo,
-      // socket.io desconecta el cliente y lo vuelve a conectar.
-      socket.on('disconnect', () => {
-        // console.log('Cliente Desconectado', socket.id);
-      });
-
-      // Escuchando
-      // La parte (payload, callback) puede ser async si, por ejemplo, queremos escribir en BD.
-      // Se puede indicar un segundo argumento, que es el callback mandado desde el cliente para obtener una
-      // retroalimentación/feedback.
-      socket.on('enviar-mensaje', (payload, callback) => {
-        // Mandar el mensaje a todos los clientes conectados.
-        //this.io.emit('enviar-mensaje', payload);
-
-        const id = 123456789;
-        // Y aquí ejecutamos el callback que solo aparecerá en el cliente que emitió el mensaje.
-        // Ejemplo de uso.
-        // El cliente quiere grabar algo en BD. Manda el mensaje y el servidor le devuelve el id.
-        // Se aconseja devolver objetos literales o primitivos y siempre la menor cantidad de información posible.
-        callback({ id, fecha: new Date().getTime() });
-      });
-    });
+    this.io.on('connection', socketController);
   }
 
   // Dejando listo el proyecto para desplegar en Railway.
