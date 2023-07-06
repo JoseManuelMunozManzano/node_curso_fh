@@ -28,6 +28,10 @@ export class Server {
 
     // Rutas de mi aplicación.
     this.routes();
+
+    // Sockets
+    // Configuración para todos los eventos de WebSocket
+    this.sockets();
   }
 
   middlewares() {
@@ -41,6 +45,26 @@ export class Server {
 
   // Se crea el directorio routes para las rutas.
   routes() {}
+
+  // Configuración de sockets
+  // https://socket.io/docs/v4/
+  sockets() {
+    // this.io hace referencia a nuestro servidor de sockets, el cual es diferente
+    // a nuestra aplicación de Express (this.app), pero están conectados.
+    // Son como dos mundos separados pero conectados.
+    // Ver cliente (public/js/socket-client.js) para ver como se conecta.
+    this.io.on('connection', (socket) => {
+      // Aunque tenemos un id, estos son muy volátiles (cambian al recargar el navegador)
+      // y nosotros no debemos usarlos. Es solo para manejo interno de socket.io
+      console.log('Cliente conectado', socket.id);
+
+      // Se maneja automáticamente la desconexión, es decir, si en el navegador hay una conexión y recargo,
+      // socket.io desconecta el cliente y lo vuelve a conectar.
+      socket.on('disconnect', () => {
+        console.log('Cliente Desconectado', socket.id);
+      });
+    });
+  }
 
   // Dejando listo el proyecto para desplegar en Railway.
   // Se ha indicado en package.json el script start y aquí indicamos el host 0.0.0.0
