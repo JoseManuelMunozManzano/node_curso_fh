@@ -28,6 +28,18 @@ npm run start:dev
 http:/localhost:8080
 ```
 
+4. Funcionamiento de la app
+
+En pantalla principal pulsar el botón Crear Tickets y en la nueva pantalla que sale pulsar Generar nuevo ticket varias veces.
+
+Con esto tenemos tickets sin asignar a un Escritorio.
+
+Volver a la pantalla principal e informar en el input Escritorio 1. Pulsar el botón Ingresar. Pulsar el botón Atender siguiente ticket.
+
+Volver a la pantalla principal y pulsar el botón Pantalla Pública.
+
+Si queremos empezar de cero simplemente acceder a data.json y en la propiedad hoy indicar cualquier otro día distinto al actual. Luego recargar la aplicación.
+
 IMPORTANTE:
 Archivo de configuración nodemon.json
 Me hace falta porque cuando pulso algún botón, Nodemon detecta que hay un cambio en un archivo y se reinicia.

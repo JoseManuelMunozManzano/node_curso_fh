@@ -6,6 +6,7 @@ const ticketControl = new TicketControl();
 export const socketController = (socket) => {
   // Solo a la persona que se conecta (no es broadcast)
   socket.emit('ultimo-ticket', ticketControl.ultimo);
+  socket.emit('estado-actual', ticketControl.ultimos4);
 
   // El payload no lo voy a usar.
   // En el callback le voy a enviar cual es el ticket que tiene que mostrar.
@@ -25,7 +26,8 @@ export const socketController = (socket) => {
     }
 
     const ticket = ticketControl.atenderTicket(escritorio);
-    // TODO: Notificar cambio en ultimos4
+
+    socket.broadcast.emit('estado-actual', ticketControl.ultimos4);
 
     if (!ticket) {
       callback({
