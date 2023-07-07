@@ -7,6 +7,7 @@ export const socketController = (socket) => {
   // Solo a la persona que se conecta (no es broadcast)
   socket.emit('ultimo-ticket', ticketControl.ultimo);
   socket.emit('estado-actual', ticketControl.ultimos4);
+  socket.emit('tickets-pendientes', ticketControl.tickets.length);
 
   // El payload no lo voy a usar.
   // En el callback le voy a enviar cual es el ticket que tiene que mostrar.
@@ -14,7 +15,7 @@ export const socketController = (socket) => {
     const siguiente = ticketControl.siguiente();
     callback(siguiente);
 
-    // TODO: Notificar que hay un nuevo ticket pendiente de asignar
+    socket.broadcast.emit('tickets-pendientes', ticketControl.tickets.length);
   });
 
   socket.on('atender-ticket', ({ escritorio }, callback) => {
@@ -28,6 +29,10 @@ export const socketController = (socket) => {
     const ticket = ticketControl.atenderTicket(escritorio);
 
     socket.broadcast.emit('estado-actual', ticketControl.ultimos4);
+    // Para que llegue al usuario que se conecta y a los demás uso los eventos emit y broadcast.emit.
+    // Otra opción es pasar a socketController la referencia al servidor de io.
+    socket.emit('tickets-pendientes', ticketControl.tickets.length);
+    socket.broadcast.emit('tickets-pendientes', ticketControl.tickets.length);
 
     if (!ticket) {
       callback({

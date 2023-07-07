@@ -3,6 +3,7 @@ const lblEscritorio = document.querySelector('h1');
 const btnAtender = document.querySelector('button');
 const lblTicket = document.querySelector('small');
 const divAlerta = document.querySelector('.alert');
+const lblPendientes = document.querySelector('#lblPendientes');
 
 // Para saber si el escritorio ya existe en el url.
 // Ejemplo: http://localhost:8080/escritorio.html?escritorio=Escritorio+1
@@ -28,8 +29,15 @@ socket.on('disconnect', () => {
   btnAtender.disabled = true;
 });
 
-socket.on('ultimo-ticket', (ultimo) => {
-  // lblNuevoTicket.innerText = 'Ticket ' + ultimo;
+socket.on('tickets-pendientes', (pendientes) => {
+  if (pendientes === 0) {
+    lblPendientes.style.display = 'none';
+    divAlerta.style.display = '';
+  } else {
+    lblPendientes.style.display = '';
+    lblPendientes.innerText = pendientes;
+    divAlerta.style.display = 'none';
+  }
 });
 
 btnAtender.addEventListener('click', () => {
