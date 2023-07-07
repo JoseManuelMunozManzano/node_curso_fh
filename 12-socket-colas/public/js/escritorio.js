@@ -1,6 +1,8 @@
 // Referencias HTML
 const lblEscritorio = document.querySelector('h1');
 const btnAtender = document.querySelector('button');
+const lblTicket = document.querySelector('small');
+const divAlerta = document.querySelector('.alert');
 
 // Para saber si el escritorio ya existe en el url.
 // Ejemplo: http://localhost:8080/escritorio.html?escritorio=Escritorio+1
@@ -14,6 +16,7 @@ if (!searchParams.has('escritorio')) {
 
 const escritorio = searchParams.get('escritorio');
 lblEscritorio.innerText = escritorio;
+divAlerta.style.display = 'none';
 
 const socket = io();
 
@@ -30,7 +33,13 @@ socket.on('ultimo-ticket', (ultimo) => {
 });
 
 btnAtender.addEventListener('click', () => {
-  // socket.emit('siguiente-ticket', null, (ticket) => {
-  //   lblNuevoTicket.innerText = ticket;
-  // });
+  // Esto también se podría hacer con una petición REST.
+  socket.emit('atender-ticket', { escritorio }, ({ ok, ticket, msg }) => {
+    if (!ok) {
+      lblTicket.innerText = 'Nadie';
+      return (divAlerta.style.display = '');
+    }
+
+    lblTicket.innerText = 'Ticket ' + ticket.numero;
+  });
 });
