@@ -12,6 +12,11 @@ const socket = io();
 
 // El payload será un arreglo que contenga los últimos 4 tickets.
 socket.on('estado-actual', (payload) => {
+  // El archivo de audio es con respecto al html, por eso es ./ y no ../
+  const audio = new Audio('./audio/new-ticket.mp3');
+  console.log(audio);
+  audio.play();
+
   const [ticket1, ticket2, ticket3, ticket4] = payload;
 
   if (ticket1) {
