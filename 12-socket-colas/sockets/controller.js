@@ -4,10 +4,15 @@ import { TicketControl } from '../models/ticket-control.js';
 const ticketControl = new TicketControl();
 
 export const socketController = (socket) => {
-  socket.on('enviar-mensaje', (payload, callback) => {
-    const id = 123456789;
-    callback(id);
+  // Solo a la persona que se conecta (no es broadcast)
+  socket.emit('ultimo-ticket', ticketControl.ultimo);
 
-    socket.broadcast.emit('enviar-mensaje', payload);
+  // El payload no lo voy a usar.
+  // En el callback le voy a enviar cual es el ticket que tiene que mostrar.
+  socket.on('siguiente-ticket', (payload, callback) => {
+    const siguiente = ticketControl.siguiente();
+    callback(siguiente);
+
+    // TODO: Notificar que hay un nuevo ticket pendiente de asignar
   });
 };
