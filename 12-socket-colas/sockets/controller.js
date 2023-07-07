@@ -1,5 +1,6 @@
 import { TicketControl } from '../models/ticket-control.js';
 
+// Instancia única cada vez que se reinicialice el backend.
 const ticketControl = new TicketControl();
 
 export const socketController = (socket) => {

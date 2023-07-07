@@ -8,6 +8,14 @@ import fs from 'fs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+// Sirve para que todos los tickets luzcan igual.
+class Ticket {
+  constructor(numero, escritorio) {
+    this.numero = numero;
+    this.escritorio = escritorio;
+  }
+}
+
 export class TicketControl {
   constructor() {
     this.ultimo = 0;
@@ -45,5 +53,38 @@ export class TicketControl {
   guardarDB() {
     const dbPath = path.join(__dirname, '../db/data.json');
     fs.writeFileSync(dbPath, JSON.stringify(this.toJson));
+  }
+
+  siguiente() {
+    this.ultimo += 1;
+    // El ticket no tendrá asignado un escritorio en este momento.
+    const ticket = new Ticket(this.ultimo, null);
+    this.tickets.push(ticket);
+
+    this.guardarDB();
+    return 'Ticket ' + ticket.numero;
+  }
+
+  atenderTicket(escritorio) {
+    // No tenemos tickets
+    if (this.tickets.length === 0) {
+      return null;
+    }
+
+    // Asocio el ticket al escritorio
+    const ticket = this.tickets.shift(); //this.tickets[0];
+    ticket.escritorio = escritorio;
+
+    // Lo añado al principio de los últimos 4 que se ven
+    this.ultimos4.unshift(ticket);
+
+    // Verificamos que sean 4 y borro a partir del 5.
+    if (this.ultimos4.length > 4) {
+      this.ultimos4.splice(4);
+    }
+
+    this.guardarDB();
+
+    return ticket;
   }
 }
