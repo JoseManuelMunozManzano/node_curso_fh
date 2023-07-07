@@ -174,3 +174,15 @@ Se van a cubrir los siguientes temas:
 - Escuchar los mensajes servidor cliente / cliente servidor
 - Broadcast
 - Callbacks en los sockets
+
+### 12-socket-colas
+
+Vamos a crear una aplicación de colas.
+
+Se van a cubrir los siguientes temas:
+
+- Aplicar sockets en un proyecto real
+- Aprender sobre clases del ES6
+- Asignar Tickets
+- Leer Tickets
+- Notificaciones
