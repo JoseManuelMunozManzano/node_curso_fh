@@ -55,8 +55,8 @@ const conectarSocket = async () => {
     console.log('Sockets offline');
   });
 
-  socket.on('recibir-mensajes', () => {
-    // TODO:
+  socket.on('recibir-mensajes', (payload) => {
+    console.log(payload);
   });
 
   socket.on('usuarios-activos', dibujarUsuarios);
@@ -81,6 +81,21 @@ const dibujarUsuarios = (usuarios = []) => {
     ulUsuarios.innerHTML = usersHtml;
   });
 };
+
+txtMensaje.addEventListener('keyup', (ev) => {
+  // El keyCode es el código de la letra pulsada.
+  // El 13 es el Intro
+  const keyCode = ev.keyCode;
+  const mensaje = txtMensaje.value;
+  const uid = txtUid.value;
+
+  if (keyCode !== 13) return;
+  if (mensaje.length === 0) return;
+
+  socket.emit('enviar-mensaje', { mensaje, uid });
+
+  txtMensaje.value = '';
+});
 
 const main = async () => {
   // Lo primero es validar que el JWT sea correcto.
