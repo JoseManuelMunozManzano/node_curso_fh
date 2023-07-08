@@ -201,3 +201,16 @@ Se van a cubrir los siguientes temas:
 - Enviar mensajes privados
 - Enviar mensajes a salas
 - Enviar mensajes globales
+
+### 14-ts-restserver
+
+Proyecto de Node con TypeScript y MySql.
+
+Es sobre todo para ver como puede usarse Node en conjunción con TypeScript.
+
+Vamos a ver:
+
+- Creación de proyectos con TypeScript
+- Configurar Express con TypeScript
+- Conectarnos a MySQL desde Node
+- Crear un CRUD usando Sequelize - ODM (Parecido a Mongoose)

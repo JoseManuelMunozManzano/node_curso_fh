@@ -1,0 +1,22 @@
+{
+  "name": "14-ts-restserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "concurrently \"tsc -w\" \"nodemon dist/index.js arg\"",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.61.0",
+    "@typescript-eslint/parser": "^5.61.0",
+    "concurrently": "^8.2.0",
+    "eslint": "^8.44.0",
+    "nodemon": "^3.0.0",
+    "typescript": "^5.1.6"
+  }
+}
