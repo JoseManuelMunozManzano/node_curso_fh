@@ -26,12 +26,14 @@ export const socketController = async (socket, io) => {
   // Cuando una persona se conecta hay que:
   // 1. Agregar el usuario conectado
   // 2. Emitir a toda la gente que está conectada para hacerles saber que un usuario se ha conectado.
+  // 3. Enviar los últimos 10 mensajes.
   //
   // Para evitar tener que hacer un emit y luego un emit.broadcast, es decir, dos emisiones, pasaremos
   // a esta función el io, que es todo nuestro servidor de sockets. Ahí están todos los usuarios, incluido el que
   // se acaba de conectar.
   chatMensajes.conectarUsuario(usuario);
   io.emit('usuarios-activos', chatMensajes.usuariosArr);
+  socket.emit('recibir-mensajes', chatMensajes.ultimos10);
 
   // Limpiar cuando alguien se desconecta.
   socket.on('disconnect', () => {
