@@ -11,6 +11,9 @@ import express from 'express';
 import cors from 'cors';
 import fileUpload from 'express-fileupload';
 
+import { createServer } from 'http';
+import { Server as ServerIo } from 'socket.io';
+
 import { router as userRoute } from '../routes/usuarios.js';
 import { router as buscarRoute } from '../routes/buscar.js';
 import { router as authRoute } from '../routes/auth.js';
@@ -19,6 +22,8 @@ import { router as categoriasRouter } from '../routes/categorias.js';
 import { router as uploadsRouter } from '../routes/uploads.js';
 import { dbConnection } from '../database/config.js';
 
+import { socketController } from '../sockets/controller.js';
+
 export class Server {
   constructor() {
     // Al crear una instancia de Server, vamos a crear la aplicación de express aquí como una propiedad
@@ -26,6 +31,13 @@ export class Server {
     this.app = express();
     // Una vez importado dotenv las variables de entorno son globales a toda la aplicación.
     this.port = process.env.PORT || 8080;
+
+    // Creo el server usando http, pasándole mi servidor de Express.
+    // Ese es el server que tenemos que levantar, no el de Express.
+    // El io es toda la información de los sockets conectados.
+    this.server = createServer(this.app);
+    this.io = new ServerIo(this.server); // Socket.io: Servidor de sockets
+
     // Es un poco difícil ver las rutas de la aplicación, por lo que se incluye aquí, para que otros
     // desarrolladores que vengan a ver mi servidor puedan ver las rutas disponibles.
     //
@@ -47,6 +59,9 @@ export class Server {
 
     // Rutas de mi aplicación.
     this.routes();
+
+    // Sockets
+    this.sockets();
   }
 
   async conectarDB() {
@@ -95,10 +110,15 @@ export class Server {
     this.app.use(this.paths.usuarios, userRoute);
   }
 
+  sockets() {
+    this.io.on('connection', socketController);
+  }
+
   // Dejando listo el proyecto para desplegar en Railway.
   // Se ha indicado en package.json el script start y aquí indicamos el host 0.0.0.0
   listen() {
-    this.app.listen(this.port, '0.0.0.0', () => {
+    // El servidor que tenemos que levantar es el de http (this.server), no el de Express (this.app) que no tiene nada de sockets.
+    this.server.listen(this.port, '0.0.0.0', () => {
       console.log('Servidor corriendo en puerto', this.port);
     });
   }
