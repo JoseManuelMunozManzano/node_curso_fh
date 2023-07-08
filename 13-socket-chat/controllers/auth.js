@@ -99,3 +99,16 @@ export const googleSignIn = async (req, res = response) => {
     });
   }
 };
+
+export const renovarToken = async (req, res = response) => {
+  // Ahora mismo tengo un id y un usuario, gracias a mi middleware validarJWT.
+  const { usuario } = req;
+
+  // Generar JWT
+  const token = await generarJWT(usuario.id);
+
+  res.json({
+    usuario,
+    token,
+  });
+};

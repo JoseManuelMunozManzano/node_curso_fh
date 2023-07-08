@@ -29,13 +29,13 @@ npm i
 npm run start:dev
 ```
 
-5. Ir a la ruta
+5. Ir a la ruta siguiente para generar un token:
 
 ```
 http:/localhost:8080
 ```
 
-6. La ruta del socket es:
+6. Una vez tengamos JWT, la ruta del socket es:
 
 ```
 http:/localhost:8080/chat.html
