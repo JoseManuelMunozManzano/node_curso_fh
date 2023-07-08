@@ -111,7 +111,8 @@ export class Server {
   }
 
   sockets() {
-    this.io.on('connection', socketController);
+    // Pasamos el io también.
+    this.io.on('connection', (socket) => socketController(socket, this.io));
   }
 
   // Dejando listo el proyecto para desplegar en Railway.

@@ -19,7 +19,7 @@ export class ChatMensajes {
   }
 
   get usuariosArr() {
-    // Devuelve [{}, {}, {}, ...] usuarios conectados
+    // Devuelve [{}, {}, {}, ...] usuarios conectados, es decir, el objeto lo transforma en un arreglo.
     return Object.values(this.usuarios);
   }
 
