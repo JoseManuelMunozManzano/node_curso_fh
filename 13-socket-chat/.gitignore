@@ -1,0 +1,8 @@
+node_modules/
+
+.env
+
+uploads/*.jpg
+uploads/imgs/*.jpg
+uploads/usuarios/*.jpg
+uploads/productos/*.jpg

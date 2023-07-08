@@ -186,3 +186,18 @@ Se van a cubrir los siguientes temas:
 - Asignar Tickets
 - Leer Tickets
 - Notificaciones
+
+### 13-socket-chat
+
+Dado nuestro proyecto 09-restserver, vamos a expandirlo para convertirlo en una sala de chat usando socket.io
+
+Se van a cubrir los siguientes temas:
+
+- Autenticar Sockets
+- Usar JWT para validar Sockets
+- Headers personalizados para Sockets
+- Implementar el login en el FrontEnd
+- Implementar y usar el GoogleSign in creado
+- Enviar mensajes privados
+- Enviar mensajes a salas
+- Enviar mensajes globales
