@@ -5,6 +5,13 @@ const url = 'http://localhost:8080/api/auth';
 let usuario = null;
 let socket = null;
 
+// Referencias HTML
+const txtUid = document.querySelector('#txtUid');
+const txtMensaje = document.querySelector('#txtMensaje');
+const ulUsuarios = document.querySelector('#ulUsuarios');
+const ulMensajes = document.querySelector('#ulMensajes');
+const btnSalir = document.querySelector('#btnSalir');
+
 // Validar el token del LocalStorage
 const validarJWT = async () => {
   const token = localStorage.getItem('token') || '';
@@ -34,10 +41,30 @@ const conectarSocket = async () => {
   // Aquí le estoy diciendo que se conecte, pero en el backend no sé quien es.
   // En cada uno de los mensajes que ese socket envíe vamos a meter este token, y así comprobamos si es válido o no.
   // El problema es que bastante información del payload va a ser información que no me interesa (el token)
-  const socket = io({
+  socket = io({
     extraHeaders: {
       'x-token': localStorage.getItem('token'),
     },
+  });
+
+  socket.on('connect', () => {
+    console.log('Sockets online');
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Sockets offline');
+  });
+
+  socket.on('recibir-mensajes', () => {
+    // TODO:
+  });
+
+  socket.on('usuarios-activos', () => {
+    // TODO:
+  });
+
+  socket.on('mensaje-privado', () => {
+    // TODO:
   });
 };
 
