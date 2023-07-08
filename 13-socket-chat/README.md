@@ -23,16 +23,20 @@ npm i
 
 3. Renombrar el archivo example.env a .env e informar la conexión a MongoDB.
 
-4. Indicar en index.html, donde se indica 'indicar_aqui_GOOGLE_CLIENT_ID' el valor de esa clave
-
-5. Para ejecutar:
+4. Para ejecutar:
 
 ```
 npm run start:dev
 ```
 
-6. Ir a la ruta
+5. Ir a la ruta
 
 ```
 http:/localhost:8080
+```
+
+6. La ruta del socket es:
+
+```
+http:/localhost:8080/chat.html
 ```
