@@ -19,11 +19,26 @@ const validarJWT = async () => {
     headers: { 'x-token': token },
   });
 
+  // Renovando el token y obteniendo el usuario que está conectado.
   const { usuario: userDB, token: tokenDB } = await resp.json();
-
-  // Renovando el token y obteniendo el usuario.
   localStorage.setItem('token', tokenDB);
   usuario = userDB;
+
+  document.title = usuario.nombre;
+
+  await conectarSocket();
+};
+
+const conectarSocket = async () => {
+  // Validación del JWT contra nuestro socket.
+  // Aquí le estoy diciendo que se conecte, pero en el backend no sé quien es.
+  // En cada uno de los mensajes que ese socket envíe vamos a meter este token, y así comprobamos si es válido o no.
+  // El problema es que bastante información del payload va a ser información que no me interesa (el token)
+  const socket = io({
+    extraHeaders: {
+      'x-token': localStorage.getItem('token'),
+    },
+  });
 };
 
 const main = async () => {
@@ -32,5 +47,3 @@ const main = async () => {
 };
 
 main();
-
-// const socket = io();

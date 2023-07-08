@@ -34,9 +34,3 @@ npm run start:dev
 ```
 http:/localhost:8080
 ```
-
-6. Una vez tengamos JWT, la ruta del socket es:
-
-```
-http:/localhost:8080/chat.html
-```

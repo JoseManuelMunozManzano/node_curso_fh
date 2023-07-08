@@ -29,6 +29,7 @@ miFormulario.addEventListener('submit', (ev) => {
       }
 
       localStorage.setItem('token', token);
+      window.location = 'chat.html';
     })
     .catch(console.warn);
 });
@@ -61,6 +62,7 @@ function handleCredentialResponse(response) {
       localStorage.setItem('email', resp.usuario.correo);
       // También grabamos el token, que me servirá para validar mi token en la parte de los sockets.
       localStorage.setItem('token', resp.token);
+      window.location = 'chat.html';
     })
     .catch(console.warn);
 }
