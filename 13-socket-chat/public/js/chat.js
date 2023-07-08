@@ -111,6 +111,11 @@ txtMensaje.addEventListener('keyup', (ev) => {
   txtMensaje.value = '';
 });
 
+btnSalir.addEventListener('click', () => {
+  socket.emit('disconnect-button');
+  window.location = 'index.html';
+});
+
 const main = async () => {
   // Lo primero es validar que el JWT sea correcto.
   await validarJWT();

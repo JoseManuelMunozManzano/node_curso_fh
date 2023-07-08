@@ -59,6 +59,11 @@ export const socketController = async (socket, io) => {
     io.emit('usuarios-activos', chatMensajes.usuariosArr);
   });
 
+  socket.on('disconnect-button', () => {
+    chatMensajes.desconectarUsuario(usuario.id);
+    io.emit('usuarios-activos', chatMensajes.usuariosArr);
+  });
+
   socket.on('enviar-mensaje', ({ uid, mensaje }) => {
     if (uid) {
       // Mensaje privado
