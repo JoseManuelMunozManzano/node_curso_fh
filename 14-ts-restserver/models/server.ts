@@ -6,6 +6,7 @@ import express, { Application } from 'express';
 import cors from 'cors';
 
 import userRoutes from '../routes/usuario.js';
+import db from '../db/connection.js';
 
 class Server {
   private app: Application;
@@ -19,8 +20,19 @@ class Server {
     this.port = process.env.PORT || '8000';
 
     // Métodos iniciales
+    this.dbConnection();
     this.middlewares();
     this.routes();
+  }
+
+  // La BD tiene que estar creada para poder crear modelos basados en esta conexión.
+  async dbConnection() {
+    try {
+      await db.authenticate();
+      console.log('Database online');
+    } catch (error) {
+      throw new Error(String(error));
+    }
   }
 
   middlewares() {
