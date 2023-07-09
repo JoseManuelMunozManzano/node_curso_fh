@@ -20,6 +20,11 @@ const db = new Sequelize(database, usuario, password, {
     // Cada comando que ejecutemos e impacte en la BD lo veremos en consola.
     // Para producción descomentar esta línea.
     //logging: false
+    // Para que no cree los campos createdAt y updatedAt
+    // Si no se indica esto, hay que crear los campos en la BD.
+    // define: {
+    //   timestamps: false,
+    // },
 });
 export default db;
 //# sourceMappingURL=connection.js.map

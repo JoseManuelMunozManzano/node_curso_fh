@@ -1,6 +1,7 @@
 // Como luce nuestro usuario en BD
-// Sequelize crea dos campos automáticamente: createdUp y updatedUp
-// Se puede configurar para que no los cree, pero son campos útiles.
+// Sequelize crea dos campos automáticamente: createdAt y updatedAt
+// Se puede configurar para que no los cree (ver connection.ts), pero son campos útiles.
+// NOTA: HAY QUE CREARLOS TAMBIEN EN BD!
 //
 // El id, al ser un autonumérico, sequelize lo maneja de forma automática, por lo que
 // no hace falta declararlo.
@@ -9,9 +10,9 @@
 // La idea de hacer un modelo es que este se encarga de hacer saneamiento de los queries,
 // hacer las inserciones de manera segura y evitamos inyecciones de SQL.
 import { DataTypes } from 'sequelize';
-import db from '../db/connection';
+import db from '../db/connection.js';
 const Usuario = db.define('Usuario', {
-    nombre: {
+    name: {
         type: DataTypes.STRING,
     },
     email: {
