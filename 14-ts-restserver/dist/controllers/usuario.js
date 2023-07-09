@@ -64,11 +64,24 @@ export const putUsuario = (req, res) => __awaiter(void 0, void 0, void 0, functi
         });
     }
 });
-export const deleteUsuario = (req, res) => {
+export const deleteUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    res.json({
-        msg: 'deleteUsuario',
-        id,
-    });
-};
+    const usuario = yield Usuario.findByPk(id);
+    if (!usuario) {
+        return res.status(404).json({
+            msg: 'No existe un usuario con el id ' + id,
+        });
+    }
+    // Eliminación física
+    //
+    // await Usuario.destroy({
+    //   where: {
+    //     id,
+    //   },
+    // });
+    // Eliminación lógica
+    //
+    yield Usuario.update({ estado: false }, { where: { id } });
+    res.json(usuario);
+});
 //# sourceMappingURL=usuario.js.map
