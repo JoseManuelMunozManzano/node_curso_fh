@@ -21,7 +21,9 @@ Seguir los siguientes pasos para echar a andar el proyecto:
 npm i
 ```
 
-3. Para ejecutar:
+3. Crear la base de datos y la tabla Usuarios en MySQL. Para ello coger el fichero consultasSql.
+
+4. Para ejecutar:
 
 ```
 npm run build
