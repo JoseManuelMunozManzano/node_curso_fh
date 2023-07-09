@@ -22,24 +22,50 @@ export const getUsuario = async (req: Request, res: Response) => {
   }
 };
 
-export const postUsuario = (req: Request, res: Response) => {
+export const postUsuario = async (req: Request, res: Response) => {
   const { body } = req;
 
-  res.json({
-    msg: 'postUsuarios',
-    body,
-  });
+  try {
+    const existeEmail = await Usuario.findOne({ where: { email: body.email } });
+    if (existeEmail) {
+      return res.status(400).json({
+        msg: 'Ya existe un usuario con el email ' + body.email,
+      });
+    }
+
+    const usuario = await Usuario.create(body);
+    res.json(usuario);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      msg: 'Hable con el administrador',
+    });
+  }
 };
 
-export const putUsuario = (req: Request, res: Response) => {
+export const putUsuario = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { body } = req;
 
-  res.json({
-    msg: 'putUsuario',
-    body,
-    id,
-  });
+  try {
+    const usuario = await Usuario.findByPk(id);
+
+    if (!usuario) {
+      return res.status(404).json({
+        msg: 'No existe un usuario con el id ' + id,
+      });
+    }
+
+    // Para no hacer muy grande esta función NO se va a incluir la validación de email.
+
+    await Usuario.update(body, { where: { id } });
+    res.json(usuario);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      msg: 'Hable con el administrador',
+    });
+  }
 };
 
 export const deleteUsuario = (req: Request, res: Response) => {

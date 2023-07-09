@@ -3,6 +3,8 @@ import { deleteUsuario, getUsuario, getUsuarios, postUsuario, putUsuario } from 
 
 const router = Router();
 
+// Indicar que aquí no se están haciendo validaciones.
+// Como es lo mismo que ya hemos hecho en proyectos anteriores se deja así.
 router.get('/', getUsuarios);
 router.get('/:id', getUsuario);
 router.post('/', postUsuario);

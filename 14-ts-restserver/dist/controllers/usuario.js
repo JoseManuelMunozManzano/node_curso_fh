@@ -24,22 +24,46 @@ export const getUsuario = (req, res) => __awaiter(void 0, void 0, void 0, functi
         });
     }
 });
-export const postUsuario = (req, res) => {
+export const postUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
-    res.json({
-        msg: 'postUsuarios',
-        body,
-    });
-};
-export const putUsuario = (req, res) => {
+    try {
+        const existeEmail = yield Usuario.findOne({ where: { email: body.email } });
+        if (existeEmail) {
+            return res.status(400).json({
+                msg: 'Ya existe un usuario con el email ' + body.email,
+            });
+        }
+        const usuario = yield Usuario.create(body);
+        res.json(usuario);
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).json({
+            msg: 'Hable con el administrador',
+        });
+    }
+});
+export const putUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const { body } = req;
-    res.json({
-        msg: 'putUsuario',
-        body,
-        id,
-    });
-};
+    try {
+        const usuario = yield Usuario.findByPk(id);
+        if (!usuario) {
+            return res.status(404).json({
+                msg: 'No existe un usuario con el id ' + id,
+            });
+        }
+        // Para no hacer muy grande esta función NO se va a incluir la validación de email.
+        yield Usuario.update(body, { where: { id } });
+        res.json(usuario);
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).json({
+            msg: 'Hable con el administrador',
+        });
+    }
+});
 export const deleteUsuario = (req, res) => {
     const { id } = req.params;
     res.json({

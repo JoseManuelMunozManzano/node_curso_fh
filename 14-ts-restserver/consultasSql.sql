@@ -10,6 +10,9 @@ updatedAt timestamp,
  PRIMARY KEY (id)
 );
 
+-- Constraint
+CREATE UNIQUE INDEX USUARIOS_EMAIL_INDEX ON NODE.USUARIOS(email);
+
 
 -- Carga inicial
 INSERT INTO NODE.USUARIOS(NAME, EMAIL, ESTADO) VALUES('José Manuel', 'jm@gmail.es', 1);
